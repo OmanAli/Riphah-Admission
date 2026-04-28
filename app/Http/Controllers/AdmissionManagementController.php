@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdmissionSession;
 use App\Models\Application;
 use App\Models\MBBS_BDS;
 use App\Models\MbbsBds;
+use App\Models\OfferLetter;
+use App\Models\PublishedOfferLetter;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class AdmissionManagementController extends Controller
@@ -31,12 +35,57 @@ class AdmissionManagementController extends Controller
     public function approve_admission()
     {
         $applications = Application::latest()->get();
-        return view('pages.admission.approve_admission', compact('applications'));
+
+        return view('pages.admission.approve_admission', compact('applications', 'letters'));
     }
     public function approve_application()
     {
-        $applications = Application::where('application_status', 1)->latest()->get();
-        return view('pages.admission.approve_application', compact('applications'));
+        $applications = Application::where('application_status', 1)->with('offerletter')->latest()->get();
+        $letters = OfferLetter::latest()->get();
+        return view('pages.admission.approve_application', compact('applications', 'letters'));
+    }
+
+    public function publish_offer_letter(Request $request)
+    {
+        $application = Application::where('id', $request->input('application_id'))->first();
+        $offer_letter = OfferLetter::where('id', $request->input('offer_letter'))->first();
+        $due_date = $request->input('date');
+        $session = AdmissionSession::where('session_status', 1)->first();
+        if ($request->input('action') == 'preview') {
+            return view('pages.admission.preview_offer_letter', compact('application', 'offer_letter', 'due_date', 'session'));
+        } else {
+            PublishedOfferLetter::create([
+                'application_id' =>  $request->input('application_id'),
+                'offer_letter' => $request->input('offer_letter'),
+                'status' => 1,
+                'due_date' => $due_date,
+            ]);
+            return redirect()->back()->with('message', 'Offer Letter Published Successfully!');
+        }
+    }
+    public function un_publish_offer_letter($id)
+    {
+        return redirect()->back()->with('message', 'Offer Letter Un-Published Successfully!');
+        // $publishedOfferLetter = PublishedOfferLetter::where('application_id', $id)->first();
+        // if ($publishedOfferLetter) {
+        //     $publishedOfferLetter->delete();
+        //     return redirect()->back()->with('message', 'Offer Letter Un-Published Successfully!');
+        // } else {
+        //     return redirect()->back()->with('error', 'Published Offer Letter not found.');
+        // }
+    }
+
+    public function download_offer_letter($id)
+    {
+        $publishedOfferLetter = PublishedOfferLetter::where('application_id', $id)->first();
+        $application = Application::where('id', $id)->first();
+        $offer_letter = OfferLetter::where('id', $publishedOfferLetter->offer_letter)->first();
+        $due_date = $publishedOfferLetter->due_date;
+        $session = AdmissionSession::where('session_status', 1)->first();
+        $pdf = PDF::loadView('pages.downloads.offer_letter', compact('application', 'offer_letter', 'due_date', 'session'))
+            ->setPaper('a4', 'portrait');
+
+        return $pdf->download($application->first_name . '_' . $application->last_name . '.pdf');
     }
 
     public function mbbs_application()
@@ -47,7 +96,7 @@ class AdmissionManagementController extends Controller
 
     public function register_users()
     {
-        $users=User::latest()->get();
+        $users = User::latest()->get();
         return view('pages.admission.register_user', compact('users'));
     }
 }

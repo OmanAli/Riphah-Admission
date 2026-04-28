@@ -9,45 +9,13 @@ use App\Http\Controllers\OASProgramController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\SAPProgramController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\OfferLetterController;
 use App\Http\Controllers\SystemConfigController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return redirect('/login');
-});
-
-Route::get('/check', function () {
-    $curl = curl_init();
-    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-    $data = json_encode([
-        "username" => "mis_master",
-        "password" => "Mis_master1234**",
-        "financial_year" => "2024/2025"
-    ]);
-
-    curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://cip.riphah.edu.pk/api/master_data',
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_CUSTOMREQUEST => 'GET',
-        CURLOPT_POSTFIELDS => $data,
-
-        CURLOPT_HTTPHEADER => array(
-            'Content-Type: application/json',
-            'Content-Length: ' . strlen($data) // 🔥 important
-        ),
-    ));
-
-    $response = curl_exec($curl);
-
-    if ($response === false) {
-        echo 'Error: ' . curl_error($curl); // ✅ must check this
-    }
-
-    curl_close($curl);
-
-    echo $response;
 });
 
 Auth::routes();
@@ -79,6 +47,7 @@ Route::prefix('application')->name('application.')->middleware('auth')->group(fu
     Route::get('/download/challan/{oasID}', [ApplicationController::class, 'download_challan'])->name('download_challan');
     Route::get('/upload-fee-challan', [ApplicationController::class, 'upload_challan'])->name('upload_challan');
     Route::post('/upload-fee-challan', [ApplicationController::class, 'save_challan'])->name('save_challan');
+    Route::get('/offer-letter', [ApplicationController::class, 'offer_letter'])->name('offer_letter');
 });
 // <!--Admin Dashboard--!>
 // System Config
@@ -108,6 +77,15 @@ Route::prefix('configuration')->name('configuration.')->middleware('auth')->grou
     Route::post('/sessions-store', [SystemConfigController::class, 'sessions_store'])->name('sessions_store');
     Route::post('/sessions-update', [SystemConfigController::class, 'sessions_update'])->name('sessions_update');
 });
+
+Route::prefix('offer-letter')->name('offer_letter.')->middleware('auth')->group(function () {
+    Route::get('/', [OfferLetterController::class, 'index'])->name('index');
+    Route::get('/create', [OfferLetterController::class, 'create'])->name('create');
+    Route::post('/store', [OfferLetterController::class, 'store'])->name('store');
+    Route::get('/edit/{id}', [OfferLetterController::class, 'edit'])->name('edit');
+    Route::put('/update/{id}', [OfferLetterController::class, 'update'])->name('update');
+    Route::get('/destroy/{id}', [OfferLetterController::class, 'destroy'])->name('destroy');
+});
 // <!--Admission/Finance Dashboard--!>
 // Dashboard routes
 Route::name('oas.')->middleware('auth')->group(function () {
@@ -132,13 +110,21 @@ Route::middleware('auth')->group(function () {
     Route::get('/eligibility-update/{oasID}/{value}', [AdmissionManagementController::class, 'eligibility_update'])->name('eligibility_update');
     Route::get('/approve-admission', [AdmissionManagementController::class, 'approve_admission'])->name('approve_admission');
     Route::get('/approve-application', [AdmissionManagementController::class, 'approve_application'])->name('approve_application');
+    Route::post('/publish-offer-letter', [AdmissionManagementController::class, 'publish_offer_letter'])->name('publish_offer_letter');
+    Route::get('/download-offer-letter/{id}', [AdmissionManagementController::class, 'download_offer_letter'])->name('download_offer_letter');
+    Route::get('/un-publish-offer-letter/{id}', [AdmissionManagementController::class, 'un_publish_offer_letter'])->name('un_publish_offer_letter');
     Route::get('/mbbs/bds-application', [AdmissionManagementController::class, 'mbbs_application'])->name('mbbs_application');
     Route::get('/register-users', [AdmissionManagementController::class, 'register_users'])->name('register_users');
 });
 // REPORTS
 Route::prefix('reports')->name('report.')->middleware('auth')->group(function () {
     Route::get('/fee-report', [ReportsController::class, 'fee_report'])->name('fee_report');
+    Route::get('/get-programs/{campusId}', [ReportsController::class, 'getPrograms']);
     Route::post('/fee-report', [ReportsController::class, 'fee_report_accountant'])->name('fee_report_accountant');
+    Route::get('/application-report', [ReportsController::class, 'application_report'])->name('application_report');
+    Route::get('/application-fee-report', [ReportsController::class, 'application_fee_report'])->name('application_fee_report');
+    Route::post('/master-report', [ReportsController::class, 'master_report'])->name('master_report');
+
 });
 
 

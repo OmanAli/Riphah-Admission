@@ -33,18 +33,13 @@
                             <div class="col-md-6">
                                 <form action="{{ route('report.fee_report_accountant') }}" method="post">
                                     @csrf
-                                    <select name="level" id="level" class="form-control" required>
-                                        <option value="" selected disabled>- Select Accountant -</option>
-                                        <option value="UG">
-                                            Accountant-1</option>
-                                        <option value="PG">
-                                            Accountant-2</option>
-                                        <option value="D">
-                                            Accountant-3
-                                        </option>
-                                        <option value="Ph.D">
-                                            Accountant-4</option>
+                                    <select class="form-control" name="accountant_id" required>
+                                        <option value="" selected disabled>--Select Accountant--</option>
+                                        @foreach ($accountants as $accountant)
+                                            <option value="{{ $accountant->id }}">{{ $accountant->name }}</option>
+                                        @endforeach
                                     </select>
+                                    <span class="text-danger">{{ $errors->first('accountant_id') }}</span>
 
                                     <div class="card-footer text-start">
                                         <div class="col-sm-12 text-end">

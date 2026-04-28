@@ -41,6 +41,11 @@ class Program extends Model
     {
         return $this->hasMany(FeeAdmission::class, 'admitted_program_id');
     }
+
+    public function offer_letter()
+    {
+        return $this->hasMany(OfferLetter::class, 'oas_program_id');
+    }
     // public function program_preference_1()
     // {
     //     return $this->hasMany(Application::class, 'program_preference_1');

@@ -73,6 +73,23 @@
                                                     Structure</span></a></li>
                                     </ul>
                                 </li>
+                                <li class="sidebar-list">
+                                    <a class="sidebar-link sidebar-title {{ request()->routeIs('offer_letter.*') ? 'active' : '' }}"
+                                        href="javascript:void(0)">
+                                        <i data-feather="award"></i><span>Offer Letter Setup</span>
+                                    </a>
+                                    <ul class="sidebar-submenu"
+                                        style="{{ request()->routeIs('offer_letter.*') ? 'display: block;' : 'display: none;' }}">
+                                        <li><a href="{{ route('offer_letter.create') }}"
+                                                class="{{ request()->routeIs('offer_letter.create') ? 'active' : '' }}"><span>Create
+                                                    Offer Letter</span></a>
+                                        </li>
+                                        <li><a href="{{ route('offer_letter.index') }}"
+                                                class="{{ request()->routeIs('offer_letter.index') ? 'active' : '' }}"><span>Manage
+                                                    Offer Letter</span></a>
+                                        </li>
+                                    </ul>
+                                </li>
                             @endhasexactroles
                             @hasexactroles('admission head')
                                 <li class="sidebar-list">
@@ -99,11 +116,11 @@
                                         href="{{ route('eligibility_check') }}">
                                         <i data-feather="check-circle"></i><span class="">Eligibility Check</span></a>
                                 </li>
-                                <li class="sidebar-list">
+                                {{-- <li class="sidebar-list">
                                     <a class="sidebar-link sidebar-title link-nav {{ request()->routeIs('approve_admission') ? 'active' : '' }}"
                                         href="{{ route('approve_admission') }}">
                                         <i data-feather="thumbs-up"></i><span class="">Approve Admission</span></a>
-                                </li>
+                                </li> --}}
                                 <li class="sidebar-list">
                                     <a class="sidebar-link sidebar-title {{ request()->routeIs('approve_application', 'mbbs_application') ? 'active' : '' }}"
                                         href="javascript:void(0)">
@@ -200,11 +217,11 @@
                                         href="{{ route('sap_program.index') }}">
                                         <i data-feather="layers"></i><span class="">SAP Program</span></a>
                                 </li>
-                                <li class="sidebar-list">
+                                {{-- <li class="sidebar-list">
                                     <a class="sidebar-link sidebar-title link-nav {{ request()->routeIs('oas_program.index') ? 'active' : '' }}"
                                         href="{{ route('oas_program.index') }}">
                                         <i data-feather="info"></i><span class="">OAS Program Info</span></a>
-                                </li>
+                                </li> --}}
                                 <li class="sidebar-list">
                                     <a class="sidebar-link sidebar-title link-nav {{ request()->routeIs('program_change') ? 'active' : '' }}"
                                         href="{{ route('program_change') }}">
@@ -222,8 +239,10 @@
                                         <li><a href="{{ route('report.fee_report') }}"
                                                 class="{{ request()->routeIs('report.fee_report') ? 'active' : '' }}"><span>Fee
                                                     Report</span></a></li>
-                                        <li><a href="#" class=""><span>Application Report</span></a></li>
-                                        <li><a href="#" class=""><span>Application Fee Report</span></a></li>
+                                        <li><a href="{{ route('report.application_report') }}"
+                                                class="{{ request()->routeIs('report.application_report') ? 'active' : '' }}"><span>Application Report</span></a></li>
+                                        <li><a href="{{ route('report.application_fee_report') }}"
+                                                class="{{ request()->routeIs('report.application_fee_report') ? 'active' : '' }}"><span>Application Fee Report</span></a></li>
                                         <li><a href="#" class=""><span>Attendance Report</span></a></li>
                                     </ul>
                                 </li>
@@ -236,7 +255,7 @@
                                         <i data-feather="upload"></i><span class="">Upload Fee Challan</span></a>
                                 </li>
                                 <li class="sidebar-list">
-                                    <a class="sidebar-link sidebar-title link-nav" href="#">
+                                    <a class="sidebar-link sidebar-title link-nav" href="{{ route('application.offer_letter') }}">
                                         <i data-feather="download"></i><span class="">Download Offer
                                             Letter</span></a>
                                 </li>

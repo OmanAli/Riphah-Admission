@@ -114,18 +114,20 @@
                                 <!-- Credit Hours (no fee) -->
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="credit_hour" class="form-label">Credit Hours</label>
+                                        <label for="credit_hour" class="form-label">Credit Hours<span
+                                                style="color: red">*</span></label>
                                         <input type="number" step="0.01" class="form-control" id="credit_hour"
-                                            name="credit_hour">
+                                            name="credit_hour" required>
                                     </div>
                                 </div>
 
                                 <!-- Per Credit Hour -->
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="per_credit_hour" class="form-label">Per Credit Hour (₨)</label>
+                                        <label for="per_credit_hour" class="form-label">Per Credit Hour (₨)<span
+                                                style="color: red">*</span></label>
                                         <input type="number" step="0.01" class="form-control" id="per_credit_hour"
-                                            name="per_credit_hour">
+                                            name="per_credit_hour" required>
                                     </div>
                                 </div>
 

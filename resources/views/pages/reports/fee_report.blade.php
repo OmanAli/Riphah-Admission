@@ -30,37 +30,33 @@
                             <table class="display" id="basic-1" style="font-size: 14px;">
                                 <thead>
                                     <tr>
+
                                         <th>ID</th>
                                         <th>Name</th>
                                         <th>Program</th>
                                         <th>Created At</th>
                                         <th>Fee Status</th>
                                         <th>Download</th>
-                                        <th>Fee Receipt</th>
                                         <th>Payment Method</th>
                                         <th>Submitted By</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{-- @if (isset($applications))
-                                        @foreach ($applications as $key => $application) --}}
+                                    @if (isset($receipts))
+                                        @foreach ($receipts as $key => $receipt)
                                             <tr>
-
-                                                <td>9365</td>
-                                                <td>Candidate-1</td>
-                                                <td>Doctor of Physical Therapy (DPT) LHR</td>
-                                                <td>2017-05-08 00:00:00</td>
-                                                <td><span class="badge bg-success">SUBMITTED</span></td>
-                                                <td><span class="badge bg-success">SUBMITTED</span></td>
-                                                <td><span class="badge bg-info">SUBMITTED</span></td>
-                                                <td><span class="badge bg-info">CASH</span></td>
-                                                <td><span class="badge bg-warning">Accountant-1</span></td>
-                                                
-
+                                                <td>{{ $receipt->oas_id }}</td>
+                                                <td>{{ $receipt->name }}</td>
+                                                <td>{{ $receipt->program1_name }}</td>
+                                                <td>{{ $receipt->created_at }}</td>
+                                                <td><span class="badge bg-success">Submitted</span></td>
+                                                <td><span class="badge bg-success">Submitted</span></td>
+                                                <td><span class="badge bg-success">Cash</span></td>
+                                                <td>{{ $receipt->created_by_name }}</td>
                                             </tr>
-                                        {{-- @endforeach
+                                        @endforeach
 
-                                    @endif --}}
+                                    @endif
                                 </tbody>
                             </table>
                         </div>

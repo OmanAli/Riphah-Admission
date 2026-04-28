@@ -13,6 +13,7 @@ use App\Models\GermanLanguageApplication;
 use App\Models\MBBS_BDS;
 use App\Models\MbbsBds;
 use App\Models\Program;
+use App\Models\PublishedOfferLetter;
 use App\Models\SapInvoiceDetail;
 use App\Models\SapProgram;
 use Illuminate\Http\Request;
@@ -536,7 +537,7 @@ class ApplicationController extends Controller
     }
     private function numberToWords($number)
     {
-         $number = (int) $number;
+        $number = (int) $number;
         $ones = [
             0 => '',
             1 => 'one',
@@ -657,5 +658,12 @@ class ApplicationController extends Controller
         }
 
         return back()->with('error', 'Upload failed');
+    }
+
+    public function offer_letter()
+    {
+        $IDs = Application::where('user_id', Auth::id())->pluck('id')->toArray();
+        $offerLetters = PublishedOfferLetter::whereIn('application_id', $IDs)->get();
+        return view('pages.student.download_offer_letter', compact('offerLetters'));
     }
 }

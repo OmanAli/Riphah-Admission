@@ -52,6 +52,11 @@ class Application extends Model
         return $this->hasOne(FeeAdmission::class, 'oas_id', 'oas_id');
     }
 
+     public function offerletter()
+    {
+        return $this->hasOne(PublishedOfferLetter::class, 'application_id');
+    }
+
     public function getStatusLabelAttribute()
     {
         return match ($this->application_status) {

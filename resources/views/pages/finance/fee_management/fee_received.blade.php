@@ -26,7 +26,7 @@
             <div class="col-md-8">
                 @include('common.alert')
                 <form id="receiptForm" method="POST"
-                    action="{{ route('fee.download_receipt', ['oasID' => $application->oas_id]) }}">
+                    action="{{ route('fee.download_receipt', ['oasID' => $application->oas_id]) }}"
                     class="form theme-form">
                     @csrf
                     <div class="card-body">

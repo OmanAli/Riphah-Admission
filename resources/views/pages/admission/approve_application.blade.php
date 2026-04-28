@@ -21,49 +21,14 @@
     </div>
     <div class="container-fluid mb-2">
         <div class="row">
-            <div class="col-md-12 text-end">
-                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#offerletterModal">
+            {{-- <div class="col-md-12 text-end">
+                <button class="btn btn-primary btn-sm">
                     PUBLISH OFFER LETTER
                 </button>
                 <button class="btn btn-warning btn-sm">
                     UNPUBLISH OFFER LETTER
                 </button>
-            </div>
-        </div>
-
-        <div class="modal fade" id="offerletterModal" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-
-                    <div class="modal-header">
-                        <h5 class="modal-title">Publish Offer Letter</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="mb-3">
-                                <label for="">Fee Submission Date <span style="color: red">*</span></label>
-                                <input type="date" class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <label for="">Offer Letter<span style="color: red">*</span></label>
-                                <select name="" id="" class="form-control">
-                                    <option value="" selected disabled>Select Offer Letter</option>
-                                    <option value="">Pharm-D Islamabad</option>
-                                </select>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="modal-footer">
-
-                        <button class="btn btn-info">Preview</button>
-                        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button class="btn btn-primary">Submit</button>
-                    </div>
-
-                </div>
-            </div>
+            </div> --}}
         </div>
     </div>
     <div class="container-fluid">
@@ -108,10 +73,108 @@
                                                 </td>
 
                                                 <td>-</td>
-                                                <td>-</td>
+                                                <td>
+
+                                                    @if ($application->offerletter && $application->offerletter->status == 1)
+                                                        <a href="{{ route('download_offer_letter', ['id' => $application->id]) }}"
+                                                            class="btn btn-success btn-sm"><i
+                                                                class="fa fa-download "></i></a>
+                                                    @else
+                                                        @if ($application->offerletter && $application->offerletter->status == 2)
+                                                            <span class="badge bg-secondary">Un Published</span>
+                                                        @endif
+                                                        @if (!$application->offerletter)
+                                                            <span class="badge bg-warning">Not Published</span>
+                                                        @endif
+                                                    @endif
+                                                </td>
                                                 <td>{{ $application->created_at->format('Y-m-d') }}</td>
 
-                                                <td>-</td>
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <a href="#" class="text-dark" data-bs-toggle="dropdown">
+                                                            &#8942;
+                                                        </a>
+
+                                                        <ul class="dropdown-menu">
+                                                            @if (!$application->offerletter)
+                                                                <li>
+                                                                    <a class="btn btn-primary btn-sm dropdown-item"
+                                                                        type="button" data-bs-toggle="modal"
+                                                                        data-bs-target="#offerletterModal{{ $key }}"
+                                                                        style="color: white">
+                                                                        PUBLISH OFFER LETTER
+                                                                    </a>
+
+                                                                </li>
+                                                            @endif
+                                                            <li>
+                                                                <a class="btn btn-danger btn-sm dropdown-item"
+                                                                    href="{{ route('un_publish_offer_letter', [$application->id]) }}"
+                                                                    style="color: white">
+                                                                    UNPUBLISH OFFER LETTER
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="modal fade" id="offerletterModal{{ $key }}"
+                                                        tabindex="-1">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title">Publish Offer Letter
+                                                                    </h5>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"></button>
+                                                                </div>
+                                                                <form method="POST"
+                                                                    action="{{ route('publish_offer_letter') }}">
+                                                                    <div class="modal-body">
+
+                                                                        @csrf
+                                                                        <input type="hidden" name="application_id"
+                                                                            value="{{ $application->id }}">
+                                                                        <div class="mb-3">
+                                                                            <label for="">Fee Submission
+                                                                                Date <span
+                                                                                    style="color: red">*</span></label>
+                                                                            <input type="date" class="form-control"
+                                                                                name="date">
+                                                                        </div>
+                                                                        <div class="mb-3">
+                                                                            <label for="">Offer
+                                                                                Letter<span
+                                                                                    style="color: red">*</span></label>
+                                                                            <select name="offer_letter" id=""
+                                                                                class="form-control">
+                                                                                <option value="" selected disabled>
+                                                                                    Select Offer Letter
+                                                                                </option>
+                                                                                @foreach ($letters as $letter)
+                                                                                    <option value="{{ $letter->id }}">
+                                                                                        {{ $letter->name }}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    <div class="modal-footer">
+
+                                                                        <button type="submit" class="btn btn-info"
+                                                                            name="action" value="preview">Preview</button>
+                                                                        <button class="btn btn-secondary"
+                                                                            data-bs-dismiss="modal">Close</button>
+                                                                        <button type="submit" class="btn btn-primary"
+                                                                            name="action" value="submit">Submit</button>
+                                                                    </div>
+                                                                </form>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
 
                                             </tr>
                                         @endforeach

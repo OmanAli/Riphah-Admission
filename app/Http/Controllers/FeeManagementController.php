@@ -85,7 +85,7 @@ class FeeManagementController extends Controller
 
     public function accountant()
     {
-        $accountants = User::where('role', 2)->get();
+        $accountants = User::where('role', 2)->orWhere('role', 4)->get();
         return view('pages.finance.fee_reports.fee_report', compact('accountants'));
     }
 
@@ -162,7 +162,7 @@ class FeeManagementController extends Controller
             $challanInfo = ChallanInfo::where('oas_id', $oasID)->first();
             if ($challanInfo) {
                 $sap_prg_id = $challanInfo->sap_prg_id;
-                $oas_prg_id = $challanInfo->oas_prg_id;
+                $oas_prg_id = SapProgram::where('id', $sap_prg_id)->pluck('oas_prg_id')->first();
                 $due_date = $challanInfo->expiry_date;
                 $installments = $challanInfo->installments;
             }
@@ -175,12 +175,15 @@ class FeeManagementController extends Controller
         $fee = FinalFee::where('oas_program_id',  $oas_prg_id)->firstOrFail();
         $netFee = (float) $fee->net_fee;
         $firstInstallment = round($netFee / $installments, 2);
+
         $remainingAmount = $netFee - $firstInstallment;
+
         $valid_date = $due_date;
         if ($request->isMethod('post')) {
             ChallanInfo::updateOrCreate(
                 ['oas_id' => $oasID],
                 [
+                    'sap_prg_id' => $sap_prg_id,
                     'doc_id'      => $doc_no,
                     'con_id'      => $conID,
                     'total_amount' => $fee->net_fee,
