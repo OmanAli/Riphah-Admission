@@ -26,7 +26,7 @@ return new class extends Migration
             $table->decimal('examinationFee', 13, 2);
             $table->decimal('semesterEnrollFee', 13, 2);
             $table->decimal('taxFee', 13, 2);
-            $table->decimal('service_charge', 13, 2);
+            $table->decimal('service_charge', 13, 2)->nullable();
             $table->integer('credit_hour');
             $table->decimal('per_credit_hour', 13, 2);
             $table->decimal('total_fee', 13, 2);
