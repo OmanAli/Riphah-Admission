@@ -80,7 +80,6 @@ class FinalFeeController extends Controller
 
             return redirect()->back()->with('message', 'Program fee saved successfully!');
         } catch (\Exception $e) {
-            dd($e->getMessage());
             DB::rollBack();
             return redirect()->back()->with('error', 'Something went wrong. Please try again.');
         }
