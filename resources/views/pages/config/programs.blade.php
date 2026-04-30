@@ -41,7 +41,7 @@
                                         <th>Campus</th>
                                         <th>Department</th>
                                         <th>Level</th>
-                                        <th>Session</th>
+                                        {{-- <th>Session</th> --}}
                                         <th>Program</th>
                                         <th>Action</th>
                                     </tr>
@@ -62,7 +62,7 @@
                                                 @endphp
                                                 <td>{{ $item->department->department_name }}</td>
                                                 <td>{{ $levels[$item->program_type] ?? '' }}</td>
-                                                <td>{{ $item->session->session_type ?? '' }} - {{ $item->session->session_year ?? '' }}</td>
+                                                {{-- <td>{{ $item->session->session_type ?? '' }} - {{ $item->session->session_year ?? '' }}</td> --}}
                                                 <td>{{ $item->program_name }}</td>
                                                 <td>
 
@@ -118,7 +118,7 @@
                                                                                                 class="text-danger">{{ $errors->first('program') }}</span>
                                                                                         </div>
 
-                                                                                        <label
+                                                                                        {{-- <label
                                                                                             class="col-sm-4 col-form-label">Session<span
                                                                                                 style="color:red">*</span></label>
                                                                                         <div class="col-sm-12">
@@ -137,7 +137,7 @@
                                                                                             </select>
                                                                                             <span
                                                                                                 class="text-danger">{{ $errors->first('program') }}</span>
-                                                                                        </div>
+                                                                                        </div> --}}
                                                                                     </div>
 
                                                                                 </div>
