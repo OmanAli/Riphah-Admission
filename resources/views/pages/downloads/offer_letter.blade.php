@@ -3,356 +3,125 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Offer Letter - Riphah International University</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Provisional Admission Letter - Riphah International University</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        @media print {
+            body {
+                background-color: white;
+            }
+
+            .no-print {
+                display: none;
+            }
+
+            .page-break {
+                page-break-before: always;
+            }
         }
 
         body {
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 11px;
-            color: #111;
-            background: #fff;
-            padding: 30px 40px;
-            line-height: 1.5;
+            font-family: 'Arial', sans-serif;
+            color: #1a1a1a;
+            line-height: 1.4;
+            font-size: 13px;
         }
 
-        /* ── Header ── */
-        .header {
-            display: flex;
-            align-items: center;
-            border-bottom: 3px double #003366;
-            padding-bottom: 10px;
-            margin-bottom: 14px;
+        .letterhead-container {
+            max-width: 1024px;
+            padding: 20px;
+            margin: 0 auto;
+            background: white;
         }
 
-        .header-logo {
-            width: 80px;
-            margin-right: 16px;
-        }
-
-        .header-logo img {
+        /* Exact Table Styling from Image */
+        .exact-table {
             width: 100%;
-        }
-
-        .header-text {
-            flex: 1;
-            text-align: center;
-        }
-
-        .header-text .university-name {
-            font-size: 16px;
-            font-weight: bold;
-            color: #003366;
-            letter-spacing: 0.5px;
-        }
-
-        .header-text .university-sub {
-            font-size: 10px;
-            color: #444;
-            margin-top: 2px;
-        }
-
-        .header-text .tagline {
-            font-size: 9px;
-            color: #777;
-            font-style: italic;
-            margin-top: 2px;
-        }
-
-        .header-right {
-            width: 100px;
-            /* text-align: right; */
-            margin-left: 600px;
-            font-size: 9px;
-            color: #555;
-        }
-
-        /* ── Meta info ── */
-        .meta-block {
-            margin-bottom: 10px;
-            font-size: 9px;
-        }
-
-        .meta-block p {
-            margin-bottom: 2px;
-        }
-
-        /* ── Subject ── */
-        .subject-line {
-            font-size: 10px;
-            font-weight: bold;
-            text-decoration: underline;
-            margin-bottom: 8px;
-        }
-
-        /* ── Body text ── */
-        .body-para {
-            font-size: 9px;
-            margin-bottom: 8px;
-        }
-
-        /* ── Fee table ── */
-        .section-label {
-            font-size: 9px;
-            margin-bottom: 4px;
-            font-weight: bold;
-        }
-
-        table.fee-table {
-            width: 100%;
+            border: 1px solid black;
             border-collapse: collapse;
-            font-size: 9px;
-            margin-bottom: 8px;
+            font-size: 13px;
         }
 
-        table.fee-table th,
-        table.fee-table td {
-            border: 1px solid #333;
-            padding: 3px 5px;
-        }
-
-        table.fee-table th {
-            background-color: #003366;
-            color: #fff;
-            font-weight: bold;
+        .exact-table th,
+        .exact-table td {
+            border: 1px solid black;
+            padding: 2px 6px;
             text-align: left;
+            vertical-align: top;
         }
 
-        table.fee-table td {
-            background-color: #fff;
-        }
-
-        table.fee-table td.right,
-        table.fee-table th.right {
+        .exact-table .amount-col {
             text-align: right;
+            width: 130px;
         }
 
-        table.fee-table tr.subtotal th,
-        table.fee-table tr.subtotal td {
-            background-color: #e8f0fb;
+        .exact-table .header-row {
             font-weight: bold;
-        }
-
-        table.fee-table tr.grand-total th,
-        table.fee-table tr.grand-total td {
-            background-color: #003366;
-            color: #fff;
-            font-weight: bold;
-        }
-
-        table.fee-table tr.tax-row td {
-            background-color: #fafafa;
-            font-style: italic;
-        }
-
-        /* ── Notes below table ── */
-        table.notes-table {
-            width: 100%;
-            font-size: 9px;
-            margin-bottom: 10px;
-            border-collapse: collapse;
-        }
-
-        table.notes-table td {
-            padding: 2px 0;
-        }
-
-        /* ── Instructions ── */
-        .instructions {
-            font-size: 9px;
-            margin-top: 8px;
-            padding: 8px;
-            border: 1px solid #aac;
-            background: #f7f9ff;
-            line-height: 1.6;
-        }
-
-        .instructions p {
-            margin-bottom: 4px;
-        }
-
-        /* ── Signature block ── */
-        /* .signature-block {
-      margin-top: 30px;
-      display: flex;
-      justify-content: space-between;
-      font-size: 9px;
-    }
-    .sig-item {
-      text-align: center;
-      width: 180px;
-    }
-    .sig-item .sig-line {
-      border-top: 1px solid #333;
-      margin-bottom: 4px;
-    } */
-
-        /* Robust Layout for PDF Compatibility */
-        .signature-block {
-            margin-top: 50px;
-            width: 100%;
-            /* Clearfix for float layout */
-            display: block;
-            content: "";
-            clear: both;
-        }
-
-        .sig-item {
-            /* Using inline-block or float for maximum PDF compatibility */
-            display: inline-block;
-            vertical-align: top;
-            width: 30%;
-            /* Using percentages for better scaling */
-            margin-right: 3%;
-            text-align: center;
-            font-size: 9px;
-            font-family: sans-serif;
-        }
-
-        /* Remove margin from the last item to prevent wrapping */
-        .sig-item:last-child {
-            margin-right: 0;
-        }
-
-        .sig-item .sig-line {
-            border-top: 1px solid #333;
-            margin-bottom: 4px;
-            width: 100%;
-        }
-
-        /* Optional: Table-based approach if inline-block still fails in your specific PDF engine */
-        .sig-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 30px;
-        }
-
-        .sig-table td {
-            width: 33.33%;
-            text-align: center;
-            font-size: 9px;
-            font-family: sans-serif;
-            padding: 0 10px;
-            vertical-align: top;
-        }
-
-        /* ── Footer ── */
-        .footer {
-            margin-top: 20px;
-            border-top: 1px solid #aaa;
-            padding-top: 6px;
-            font-size: 8px;
-            color: #666;
-            text-align: center;
-        }
-
-        @media print {
-            body {
-                padding: 15px 20px;
-            }
         }
     </style>
 </head>
 
-<body>
-
-    <!-- ══════════════ HEADER ══════════════ -->
-    <div class="header">
-        <div class="header-logo">
-            <!-- Replace src with actual logo path -->
-            {{-- <img src="https://upload.wikimedia.org/wikipedia/en/thumb/5/5b/Riphah_International_University_logo.png/200px-Riphah_International_University_logo.png"
-           alt="Riphah Logo" onerror="this.style.display='none'"> --}}
+<body class="bg-gray-100 py-4">
+    <!-- PAGE 1 -->
+    <div class="letterhead-container">
+        <div class="flex justify-between items-start mb-8">
+            <div class="text-xs">
+                <p><strong>Ref:</strong> Riphah-ADM-{{ $session->session_type }} {{ $session->session_year }}</p>
+                <p><strong>Issue Date:</strong> {{ \Carbon\Carbon::now()->format('d F, Y') }}</p>
+            </div>
         </div>
-        <div class="header-text">
-            <div class="university-name">RIPHAH INTERNATIONAL UNIVERSITY</div>
-            <div class="university-sub">Islamic International Medical College Trust</div>
-            <div class="tagline">Al-Mizan Campus · 274, Peshawar Road, Rawalpindi, Pakistan</div>
+        <div class="mb-4 text-sm">
+            <p><strong>Candidate's Name:</strong> {{ $application->first_name }} {{ $application->last_name }}</p>
+            <p><strong>Father Name:</strong>{{ $application->father_name }}</p>
+            <p><strong>Online Application ID:</strong>{{ $application->oas_id }}</p>
         </div>
-        <div class="header-right">
-            Admissions Office<br>
-            Tel: +92-51-111-000-111
+
+        <div class="mb-4">
+            <p class="text-sm"><strong>Subject: <span class="underline">Provisional Admission In
+                        {{ $offer_letter->name }} (after {{ $application->level_years }} years of
+                        education) First Semester Session
+                        {{ $session->session_type }}-{{ $session->session_year }}</span></strong></p>
         </div>
-    </div>
 
-    <!-- ══════════════ META BLOCK ══════════════ -->
-    <div class="meta-block">
-        <p><strong>Ref:</strong> Riphah-ADM-{{ $session->session_type }} {{ $session->session_year }}</p>
-        <p><strong>Issue Date:</strong> {{ \Carbon\Carbon::now()->format('d F, Y') }}</p>
-        <p><strong>Candidate's Name:</strong> <strong>{{ $application->first_name }}
-                {{ $application->last_name }}</strong></p>
-        <p><strong>Father Name:</strong> <strong>{{ $application->father_name }}</strong></p>
-        <p><strong>Online Application ID:</strong> <strong>{{ $application->oas_id }}</strong></p>
-    </div>
+        <div class="mb-4 text-sm">
+            <p>Assalam-o-Alaikum!</p>
+            <p class="mt-2 text-justify">Congratulations! I am pleased to inform you that you have been selected
+                provisionally for admission in First Semester of subject degree program.</p>
+        </div>
 
-    <!-- ══════════════ SUBJECT ══════════════ -->
-    <p class="subject-line">
-        Subject: Provisional Admission In {{ $offer_letter->name }} First Semester Session
-        {{ $session->session_type }}-{{ $session->session_year }}
-    </p>
+        <p class="text-sm mb-1">Detail of your dues is given below:</p>
 
-    <!-- ══════════════ SALUTATION & BODY ══════════════ -->
-    <p class="body-para">Assalam-o-Alaikum!</p>
-    <p class="body-para">
-        Congratulations! I am pleased to inform you that you have been selected provisionally for admission in
-        <strong>First Semester</strong> <strong>of subject degree program</strong>.
-        Detail of your dues is given below:
-    </p>
-
-    <!-- ══════════════ FEE TABLE ══════════════ -->
-    <table class="fee-table">
-        <thead>
-            <tr>
-                <th width="22%">Particulars</th>
-                <th width="56%">Account Heads</th>
-                <th width="22%" class="right">Amount (Pak Rs.)</th>
+        <table class="exact-table">
+            <tr class="header-row">
+                <td style="width: 170px;">Particulars</td>
+                <td>Account Heads</td>
+                <td class="amount-col">Amount (Pak Rs.)</td>
             </tr>
-        </thead>
-        <tbody>
-            <!-- ONE TIME CHARGES -->
+            <!-- One Time Charges Section -->
             <tr>
-                <th rowspan="6">One Time Charges</th>
+                <td rowspan="3" class="font-bold">One Time Charges</td>
                 <td>Admission Fee</td>
-                <td class="right">
+                <td class="amount-col">
                     {{ number_format($offer_letter->oas_prg->final_program_fee->admissionFee, 0, '.', ',') }}</td>
             </tr>
             <tr>
                 <td>University Registration Fee</td>
-                <td class="right">
+                <td class="amount-col">
                     {{ number_format($offer_letter->oas_prg->final_program_fee->registrationFee, 0, '.', ',') }}</td>
             </tr>
             <tr>
-                <td>Council Fee</td>
-                <td class="right">
-                    {{ number_format($offer_letter->oas_prg->final_program_fee->pharmCouncilFee, 0, '.', ',') }}</td>
-            </tr>
-            <tr>
-                <td>College Security</td>
-                <td class="right">
-                    {{ number_format($offer_letter->oas_prg->final_program_fee->collegeSecurityFee, 0, '.', ',') }}
-                </td>
-            </tr>
-            <tr>
-                <td>Student Service Charges</td>
-                <td class="right">
-                    {{ number_format($offer_letter->oas_prg->final_program_fee->service_charge, 0, '.', ',') }}</td>
-            </tr>
-            <tr>
                 <td>University ID Card</td>
-                <td class="right">
+                <td class="amount-col">
                     {{ number_format($offer_letter->oas_prg->final_program_fee->idCardFee, 0, '.', ',') }}</td>
             </tr>
-
-            <!-- SEMESTER DUES -->
+            <!-- Semester Dues Section -->
             <tr>
-                <th rowspan="3">Semester Dues</th>
+                <td rowspan="3" class="font-bold">Semester Dues</td>
                 <td>Tuition Fee (for {{ $offer_letter->oas_prg->final_program_fee->credit_hour }} credit hours @
                     {{ number_format($offer_letter->oas_prg->final_program_fee->per_credit_hour, 0, '.', ',') }} per
                     Cr. Hr.)</td>
-                <td class="right">
+                <td class="amount-col">
                     {{ number_format(
                         $offer_letter->oas_prg->final_program_fee->credit_hour * $offer_letter->oas_prg->final_program_fee->per_credit_hour,
                         0,
@@ -363,118 +132,110 @@
             </tr>
             <tr>
                 <td>Examination Fee</td>
-                <td class="right">
+                <td class="amount-col">
                     {{ number_format($offer_letter->oas_prg->final_program_fee->examinationFee, 0, '.', ',') }}</td>
             </tr>
             <tr>
                 <td>Semester Enrollment Fee</td>
-                <td class="right">
+                <td class="amount-col">
                     {{ number_format($offer_letter->oas_prg->final_program_fee->semesterEnrollFee, 0, '.', ',') }}</td>
             </tr>
             @php
                 $fee = $offer_letter->oas_prg->final_program_fee;
-
                 // One Time Charges
-                $oneTime =
-                    $fee->admissionFee +
-                    $fee->registrationFee +
-                    $fee->pharmCouncilFee +
-                    $fee->collegeSecurityFee +
-                    $fee->service_charge +
-                    $fee->idCardFee;
-
+                $oneTime = $fee->admissionFee + $fee->registrationFee + $fee->idCardFee;
                 // Semester Dues
                 $tuition = $fee->credit_hour * $fee->per_credit_hour;
-
                 $semester = $tuition + $fee->examinationFee + $fee->semesterEnrollFee;
-
                 // Grand Total
                 $total = $oneTime + $semester;
+
+                $IstInstallment = round($total / 2);
             @endphp
-            <!-- SUBTOTAL -->
-            <tr class="subtotal">
-                <th colspan="2">Total Fee &amp; Dues for First Semester</th>
-                <th class="right">
-                    {{ number_format($total, 0, '.', ',') }}
-                </th>
+            <!-- Footer Totals -->
+            <tr class="font-bold">
+                <td colspan="2">Total Fee & Dues for First Semester</td>
+                <td class="amount-col">{{ number_format($total, 0, '.', ',') }}</td>
             </tr>
-
-            <!-- TAX -->
-            <tr class="tax-row">
-                <td colspan="2">Withholding Tax u/s 236(i) of Income Tax Act of Pakistan</td>
-                <td class="right">
-                    {{ number_format($offer_letter->oas_prg->final_program_fee->income_tax, 0, '.', ',') }}</td>
+            <tr class="font-bold">
+                <td colspan="2">Total Amount Payable</td>
+                <td class="amount-col">{{ number_format($total, 0, '.', ',') }}</td>
             </tr>
+        </table>
 
-            <!-- GRAND TOTAL -->
-            <tr class="grand-total">
-                <th colspan="2">Total Amount Payable</th>
-                <th class="right">
-                    {{ number_format($total + $offer_letter->oas_prg->final_program_fee->income_tax, 0, '.', ',') }}
-                </th>
-            </tr>
-        </tbody>
-    </table>
-
-    <!-- ══════════════ NOTES ══════════════ -->
-    <table class="notes-table">
-        <tr>
-            <td>** Above fee may vary subject to change in credit hours/courses.</td>
-        </tr>
-        <tr>
-            <td>
-                *** Last date for payment of dues and documents verification is
-                <strong><u>{{ \Carbon\Carbon::parse($due_date)->format('F jS, Y') }}</u></strong>
-            </td>
-        </tr>
-    </table>
-
-    <!-- ══════════════ INSTRUCTIONS ══════════════ -->
-    <div class="instructions">
-        <p><strong>Instructions / Terms &amp; Conditions:</strong></p>
-        <p>{!! $offer_letter->instructions !!}</p>
-    </div>
-
-    <!-- ══════════════ SIGNATURE ══════════════ -->
-    {{-- <div class="signature-block">
-    <div class="sig-item">
-      <div class="sig-line"></div>
-      <strong>Director Admissions</strong><br>
-      Riphah International University
-    </div>
-    <div class="sig-item">
-      <div class="sig-line"></div>
-      <strong>Registrar's Office</strong><br>
-      Riphah International University
-    </div>
-    <div class="sig-item">
-      <div class="sig-line"></div>
-      <strong>Student Signature</strong><br>
-      Acknowledgement Copy
-    </div>
-  </div> --}}
-    <div class="signature-block">
-        <div class="sig-item">
-            <div class="sig-line"></div>
-            <strong>Director Admissions</strong><br>
-            Riphah International University
+        <div class="text-xs mt-1 mb-4">
+            <p>**Above fee may vary subject to change in credit hours/courses.</p>
+            <p>***Last date for payment of dues and documents verification is
+                <strong>{{ \Carbon\Carbon::parse($due_date)->format('F jS, Y') }}</strong></p>
         </div>
-        <div class="sig-item">
-            <div class="sig-line"></div>
-            <strong>Registrar's Office</strong><br>
-            Riphah International University
-        </div>
-        <div class="sig-item">
-            <div class="sig-line"></div>
-            <strong>Student Signature</strong><br>
-            Acknowledgement Copy
-        </div>
-    </div>
 
-    <!-- ══════════════ FOOTER ══════════════ -->
-    <div class="footer">
-        Riphah International University · Al-Mizan Campus · 274 Peshawar Road, Rawalpindi ·
-        www.riphah.edu.pk · admissions@riphah.edu.pk
+        <div class="text-sm space-y-3">
+            <p><strong>Please note that:</strong></p>
+            <ul class="list-disc ml-6">
+                <li>Fee and course offerings are under revision and expected to be decided soon and shall be
+                    communicated to you at your given email address well before the commencement of classes.</li>
+                <li>Admission is subjected to the clearance of admission test.</li>
+                <li>You are required to deposit an upfront amount of
+                    <strong>Rs.{{ number_format($IstInstallment, 0, '.', ',') }}/-</strong> as first installment
+                    by <strong>May 20, 2026</strong> failing which on due date the admission will be offered to next
+                    candidate. Classes are expected to commence by September 15, 2026 therefore please be prepared
+                    accordingly. Submit the attested copies of certificates of past qualifications and provide these
+                    certificates in their original form for verification before the commencement of classes. You will be
+                    issued updated admission offer letter along with fee details by July 2026 therefore please visit the
+                    concerned admission office for its collection.</li>
+                <li>Fee can be deposited to an authorized bank account on a specified fee voucher. Specified fee
+                    vouchers can be acquired from the Fee and Dues office of your concerned Riphah campus. Cash and
+                    cheques are not acceptable.</li><br>
+                <li>
+                    <p><strong>Refund Policy:</strong></p>
+                    <div class="text-sm space-y-4">
+                        <div class="text-justify leading-tight">
+                            1. Admission processing fee, Admission fee and University Registration fee are
+                            non-refundable. 2. Examination fee and enrollment fee are refundable incase the refund
+                            application is submitted within the respective semester. 3. "Tuition Fee" is refundable at
+                            the rate of 100%, 80%, 60% or 50% if refund application is submitted by the 10th, 15th, 20th
+                            or 30th day of commencement of classes respectively as the case may be. 4. No refund of
+                            tuition fee shall be applicable after the 30th day of commencement of classes. 5. Fee refund
+                            shall be applicable subject to the submission of a specified refund application form to the
+                            concerned Fee and Dues department of respective Riphah campus. 6. Timelines (i.e. number of
+                            days) shall include holidays and be counted from the first day of commencement of classes as
+                            announced by the university for respective program and applicable to all candidates
+                            depositing dues even before or after the commencement of classes. 7. Refer to the above fee
+                            for calculations of the deductible amount. 8. Refund is applicable maximum up to the
+                            deposited amount. Eligibility of scholarship or financial assistance (if any) is subject to
+                            continuation of your study with Riphah, and the amount of allowed scholarship or financial
+                            assistance is non-refundable if candidate leaves admitted program before appearing the end
+                            term examination of respective semester/term. 9. Priority of deduction shall apply in the
+                            sequence of admission processing fee, admission fee, university registration fee and the
+                            tuition fee to the candidates allowed to make fee payments in multiple installments for the
+                            respective semester. 10. Semester freezing is not allowed for the first semester. Candidates
+                            leaving the program without prior written approval from the head of the department concerned
+                            are not allowed for a refund or deferment of dues.
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <p class="text-justify">University has discretion to revise fee & dues as deemed necessary by
+                        the authorities 'time to time. University reserves the right to impose fine(s) to students
+                        incase of breach of university rules to keep them disciplined. The amount of these fines is
+                        donated as charity (Sadaqa) to deserving persons on behalf of concerned student(s).
+                        Submission of fee means you agree to the University Rules.</p>
+                </li>
+                <li>
+                    <p class="text-justify">Admission of results awaiting students is conditional. They need to
+                        provide a hope certificate from a recently attended college. Submit attested copies of
+                        DMC/Transcript within 20 days of declaration of result.</p>
+                </li>
+                <li>
+                    <p class="text-justify">University reserves the right to cancel your admission any time if any
+                        information you provided, or documents you submitted within the given time, are found fake.
+                    </p>
+                </li>
+
+            </ul>
+            <p class="font-bold italic mt-10">We welcome you to the prestigious degree program of Riphah
+                International University.</p>
+        </div>
     </div>
 
 </body>

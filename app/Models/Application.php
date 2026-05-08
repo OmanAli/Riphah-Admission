@@ -90,6 +90,14 @@ class Application extends Model
         };
     }
 
+    public function getLevelYearsAttribute()
+    {
+        return match ($this->level) {
+            'UG' => '12',
+            'PG' => '14',
+        };
+    }
+
     public function getProcessingFeeAttribute()
     {
         $programIds = array_filter([
