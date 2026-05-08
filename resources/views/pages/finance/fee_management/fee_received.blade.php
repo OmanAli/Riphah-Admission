@@ -26,8 +26,7 @@
             <div class="col-md-8">
                 @include('common.alert')
                 <form id="receiptForm" method="POST"
-                    action="{{ route('fee.download_receipt', ['oasID' => $application->oas_id]) }}"
-                    class="form theme-form">
+                    action="{{ route('fee.download_receipt', ['oasID' => $application->oas_id]) }}" class="form theme-form">
                     @csrf
                     <div class="card-body">
                         <div class="row">
@@ -62,12 +61,12 @@
                                 <div class="mb-3 row">
                                     <label class="col-sm-3 col-form-label">Program 1</label>
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control"
+                                        {{-- <input type="text" class="form-control"
                                             value="{{ $application->application_program }}" name="program1" autofocus
-                                            required readonly>
-                                            {{-- <input type="text" class="form-control"
-                                            value="{{ $application->preferenceOne->program_name }}" name="program1" autofocus
                                             required readonly> --}}
+                                        <input type="text" class="form-control"
+                                            value="{{ $application->preferenceOne->program_name }}" name="program1"
+                                            autofocus required readonly>
                                         <span class="text-danger">{{ $errors->first('program1') }}</span>
                                     </div>
 
@@ -94,20 +93,28 @@
                                 <div class="mb-3 row">
                                     <label class="col-sm-3 col-form-label">Campus</label>
                                     <div class="col-sm-7">
-                                        <select name="campus" id="campus" class="form-control" required>
-                                            <option value="" selected disabled>--Select Campus--</option>
-                                            @foreach ($campus as $campus_item)
-                                                <option value="{{ $campus_item->campus_name }}"
-                                                    {{ $application->campus_id == $campus_item->id ? 'selected' : '' }}>
-                                                    {{ $campus_item->campus_name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
+                                        @if (auth()->user()->user_campus && auth()->user()->user_campus->campus_name)
+                                            <input type="text" class="form-control"
+                                                value="{{ auth()->user()->user_campus->campus_name }}" readonly
+                                                name="campus" autofocus required>
+                                        @else
+                                            <select name="campus" id="campus" class="form-control" required>
+                                                <option value="" selected disabled>--Select Campus--</option>
+                                                @foreach ($campus as $campus_item)
+                                                    <option value="{{ $campus_item->campus_name }}"
+                                                        {{ $application->campus_id == $campus_item->id ? 'selected' : '' }}>
+                                                        {{ $campus_item->campus_name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        @endif
+
                                         <span class="text-danger">{{ $errors->first('campus') }}</span>
                                     </div>
 
                                 </div>
-
+                                <span class="text-warning">Note:</span> Please ensure you have the cash in hand before
+                                proceeding, as this is a non-reversible process. You will be responsible for this receipt.
                                 <div class="col-sm-12 text-end">
                                     @if ($application->application_status == 1)
                                         <button class="btn btn-primary" type="submit">Submit</button>

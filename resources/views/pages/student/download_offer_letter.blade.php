@@ -53,15 +53,24 @@
                                                 <td>{{ $item->application->oas_id }}</td>
                                                 <td>{{ $item->application->first_name . ' ' . $item->application->last_name }}
                                                 </td>
-                                                <td>{{ strtoupper($item->offerletter->oas_prg->program_name) }}
+                                                <td>{{ strtoupper($item->offered_program->program_name) }}
                                                 </td>
                                                 <td>
-                                                    --
+                                                    @if ($item->status == 1)
+                                                        <span class="badge bg-success">Published</span>
+                                                    @else
+                                                        <span class="badge bg-secondary">Un Published</span>
+                                                    @endif
                                                 </td>
                                                 <td>{{ date('d M, Y', strtotime($item->created_at)) }}</td>
                                                 <td>
-                                                    <a href="{{ route('download_offer_letter', ['id' => $item->application_id]) }}"
-                                                        class="btn btn-success btn-sm"><i class="fa fa-download "></i></a>
+                                                    @if ($item->status == 1)
+                                                        <a href="{{ route('download_offer_letter', ['id' => $item->oas_id]) }}"
+                                                            class="btn btn-success btn-sm"><i
+                                                                class="fa fa-download "></i></a>
+                                                    @else
+                                                        --
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach

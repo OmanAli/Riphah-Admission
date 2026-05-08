@@ -56,7 +56,7 @@
                                             <td>{{ $application->father_name }}</td>
                                             <td>{{ strtoupper($application->preferenceOne->program_name ?? $application->level) }}
                                             </td>
-                                            <td>{{ $application->appliedcampus->campus_name ?? $application->campus }}</td>
+                                            <td>{{ $application->ApplicationRegion->region_name ?? '' }}</td>
                                             <td>
 
                                                 @if ($application->ok_for_admission == 0)
@@ -77,7 +77,7 @@
                                                     </a>
                                                 @elseif($application->application_status == 1)
                                                     <span class="badge bg-success" style="text-wrap: auto;">
-                                                        Approved for {{ $application->application_program ?? '-' }}
+                                                        Approved
                                                     </span>
                                                 @elseif($application->application_status == 2)
                                                     <span class="badge bg-danger">Rejected</span>
@@ -100,42 +100,14 @@
                                                                 <div class="modal-body">
 
                                                                     <div class="mb-3">
-                                                                        <select name="program" class="form-control">
-
-                                                                            @if (!empty($application->preferenceOne->program_name))
-                                                                                <option
-                                                                                    value="{{ $application->preferenceOne->program_name }}">
-                                                                                    {{ strtoupper($application->preferenceOne->program_name) }}
-                                                                                </option>
-                                                                            @endif
-
-                                                                            @if (!empty($application->preferenceTwo->program_name))
-                                                                                <option
-                                                                                    value="{{ $application->preferenceTwo->program_name }}">
-                                                                                    {{ strtoupper($application->preferenceTwo->program_name) }}
-                                                                                </option>
-                                                                            @endif
-
-                                                                            @if (!empty($application->preferenceThree->program_name))
-                                                                                <option
-                                                                                    value="{{ $application->preferenceThree->program_name }}">
-                                                                                    {{ strtoupper($application->preferenceThree->program_name) }}
-                                                                                </option>
-                                                                            @endif
-
-                                                                            @if (!empty($application->preferenceFour->program_name))
-                                                                                <option
-                                                                                    value="{{ $application->preferenceFour->program_name }}">
-                                                                                    {{ strtoupper($application->preferenceFour->program_name) }}
-                                                                                </option>
-                                                                            @endif
-
-                                                                            @if (empty($application->preferenceOne->program_name))
-                                                                                <option value="{{ $application->level }}">
-                                                                                    {{ strtoupper($application->level) }}
-                                                                                </option>
-                                                                            @endif
-
+                                                                        <select name="status" class="form-control"
+                                                                            required>
+                                                                            <option value="1">
+                                                                                Approve
+                                                                            </option>
+                                                                            <option value="2">
+                                                                                Reject
+                                                                            </option>
                                                                         </select>
                                                                     </div>
                                                                 </div>

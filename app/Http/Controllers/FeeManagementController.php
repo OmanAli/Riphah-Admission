@@ -8,6 +8,7 @@ use App\Models\Campus;
 use App\Models\ChallanInfo;
 use App\Models\FinalFee;
 use App\Models\Program;
+use App\Models\PublishedOfferLetter;
 use App\Models\Receipt;
 use App\Models\SapProgram;
 use App\Models\User;
@@ -118,12 +119,20 @@ class FeeManagementController extends Controller
                 $application->program_preference_2,
                 $application->program_preference_3,
                 $application->program_preference_4,
+                $application->change_program_preference_id,
             ];
             $programIds = array_filter($programIds);
             $fee = FinalFee::whereIn('oas_program_id', $programIds)->get();
-            $programs = Program::whereIn('id', $programIds)->get();
+
             $challans = ChallanInfo::where('oas_id', $oasID)->get();
-            return view('pages.finance.fee_challan', compact('fee', 'programs', 'oasID', 'challans'));
+            $offerLetterCheck = PublishedOfferLetter::where('oas_id', $oasID)
+                ->where('status', 1)
+                ->first();
+            $programs = null;
+            if ($offerLetterCheck && $offerLetterCheck->program_id) {
+                $programs = Program::where('id', $offerLetterCheck->program_id)->get();
+            }
+            return view('pages.finance.fee_challan', compact('fee', 'programs', 'oasID', 'challans', 'offerLetterCheck'));
         } else {
             return view('pages.finance.fee_challan');
         }
@@ -144,7 +153,7 @@ class FeeManagementController extends Controller
             ]
         ]);
     }
-    public function create_fee_challan(Request $request, $oasID=null)
+    public function create_fee_challan(Request $request, $oasID = null)
     {
         if ($request->isMethod('post')) {
             $request->validate([
@@ -294,7 +303,7 @@ class FeeManagementController extends Controller
     public function fee_refund(Request $request)
     {
         if ($request->isMethod('post')) {
-            $applications=Receipt::where('oas_id',$request->input('oas_id'))->get();
+            $applications = Receipt::where('oas_id', $request->input('oas_id'))->get();
             return view('pages.finance.fee_refund', compact('applications'));
         } else {
             return view('pages.finance.fee_refund');

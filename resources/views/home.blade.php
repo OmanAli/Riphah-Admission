@@ -111,12 +111,12 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    {{-- @if ($item->application_type == 'General') --}}
+                                                    @if ($item->feeReceipt==null)
                                                     <a href="{{ route('application.download_challan', ['oasID' => $item->oas_id]) }}"
                                                         class="btn btn-success btn-sm"><i class="fa fa-download "></i></a>
-                                                    {{-- @else
-                                                        --
-                                                    @endif --}}
+                                                    @else
+                                                        <span class="badge bg-success">PAID</span>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach

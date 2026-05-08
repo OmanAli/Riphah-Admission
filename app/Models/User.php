@@ -24,6 +24,7 @@ class User extends Authenticatable
         'password',
         'mobile',
         'role',
+        'campus_id',
     ];
 
     /**
@@ -62,5 +63,10 @@ class User extends Authenticatable
     public function mbbs_bds()
     {
         return $this->hasMany(MbbsBds::class, 'user_id');
+    }
+
+      public function user_campus()
+    {
+        return $this->belongsTo(Campus::class, 'campus_id');
     }
 }

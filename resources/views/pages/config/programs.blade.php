@@ -58,6 +58,7 @@
                                                         'PG' => 'Postgraduate',
                                                         'D' => 'Diploma/Certificate',
                                                         'Phd' => 'Doctoral',
+                                                        'Lang' => 'Language Course',
                                                     ];
                                                 @endphp
                                                 <td>{{ $item->department->department_name }}</td>

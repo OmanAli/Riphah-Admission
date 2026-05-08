@@ -46,6 +46,11 @@ class Program extends Model
     {
         return $this->hasMany(OfferLetter::class, 'oas_program_id');
     }
+
+    public function publish_offer_letter()
+    {
+        return $this->hasMany(PublishedOfferLetter::class, 'program_id');
+    }
     // public function program_preference_1()
     // {
     //     return $this->hasMany(Application::class, 'program_preference_1');
@@ -64,5 +69,10 @@ class Program extends Model
     // public function program_preference_4()
     // {
     //     return $this->hasMany(Application::class, 'program_preference_4');
+    // }
+
+        // public function changeProgramPreference()
+    // {
+    //     return $this->hasMany(Application::class, 'change_program_preference_id');
     // }
 }

@@ -82,7 +82,7 @@
                                             <td>{{ $application->first_name . ' ' . $application->last_name }}</td>
                                             <td>{{ strtoupper($application->preferenceOne->program_name ?? $application->program) }}
                                             </td>
-                                            <td>{{ $application->appliedcampus->campus_name ?? $application->campus }}</td>
+                                            <td>{{ $application->ApplicationRegion->region_name ?? '' }}</td>
                                             <td>
                                                 @if (!is_null($application->ok_for_admission))
                                                     @if ($application->ok_for_admission == 1)

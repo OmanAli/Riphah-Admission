@@ -73,7 +73,7 @@
         <div class="row">
             <div class="col-md-12">
                 @include('common.alert')
-                <form method="POST" action="#" enctype="multipart/form-data"
+                <form method="POST" action="{{route('application_program_add')}}" enctype="multipart/form-data"
                     class="form theme-form">
                     @csrf
                     <div class="card-body">
@@ -83,10 +83,13 @@
                                     <label class="col-sm-2 col-form-label">Offered Programs<span
                                             class="text-danger">*</span></label>
                                     <div class="col-sm-4">
-                                        <select name="offered_program" id="offered_program" class="form-control">
-                                            <option value="">Select Offered Program</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
+                                        <input type="hidden" name="oas_id" value="{{ $application->oas_id }}">
+                                        <select name="offered_program" id="offered_program" class="form-control" required>
+                                            <option value="" selected disabled>--Select Program--</option>
+                                            @foreach ($programs as $program)
+                                                <option value="{{ $program->id }}">{{ $program->program_name }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                         <span class="text-danger">{{ $errors->first('offered_program') }}</span>
                                     </div>

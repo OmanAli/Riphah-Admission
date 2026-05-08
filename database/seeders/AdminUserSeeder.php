@@ -26,19 +26,19 @@ class AdminUserSeeder extends Seeder
         }
 
         $user = User::create([
-            'name' => 'Finance Admin',
+            'name' => 'Accountant Head',
             'email' => 'admin.finance@riphah.edu.pk',
             'mobile' => null,
             'password' => Hash::make('password'),
             'role' => 2,
         ]);
-        if (! $user->hasRole('finance head')) {
-            $user->assignRole('finance head');
+        if (! $user->hasRole('accountant head')) {
+            $user->assignRole('accountant head');
         }
 
 
         $user = User::create([
-            'name' => 'Admission Admin',
+            'name' => 'Admission Head',
             'email' => 'admin.admission@riphah.edu.pk',
             'mobile' => null,
             'password' => Hash::make('password'),

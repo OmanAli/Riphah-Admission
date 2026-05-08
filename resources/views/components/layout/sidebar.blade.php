@@ -45,10 +45,10 @@
                             </li>
                             <!-- System Config -->
                             @hasexactroles('admin')
-                                {{-- <li class="sidebar-list">
-                                    <a class="sidebar-link sidebar-title link-nav" href="#">
-                                        <i data-feather="shield"></i> <span class="">Roles & Permissions</span></a>
-                                </li> --}}
+                                <li class="sidebar-list">
+                                    <a class="sidebar-link sidebar-title link-nav {{ request()->routeIs('user_index') ? 'active' : '' }}" href="{{route('user_index')}}">
+                                        <i data-feather="shield"></i> <span class="">Users</span></a>
+                                </li>
                                 <li class="sidebar-list">
                                     <a class="sidebar-link sidebar-title {{ request()->routeIs('configuration.*') ? 'active' : '' }}"
                                         href="javascript:void(0)">
@@ -56,6 +56,10 @@
                                     </a>
                                     <ul class="sidebar-submenu"
                                         style="{{ request()->routeIs('configuration.*') ? 'display: block;' : 'display: none;' }}">
+                                        <li><a href="{{ route('configuration.region') }}"
+                                                class="{{ request()->routeIs('configuration.region') ? 'active' : '' }}"><span>Region</span></a>
+                                        </li>
+
                                         <li><a href="{{ route('configuration.campus') }}"
                                                 class="{{ request()->routeIs('configuration.campus') ? 'active' : '' }}"><span>Campus</span></a>
                                         </li>
@@ -91,7 +95,7 @@
                                     </ul>
                                 </li>
                             @endhasexactroles
-                            @hasexactroles('admission head')
+                            @hasanyrole('admission head|admission officer')
                                 <li class="sidebar-list">
                                     <a class="sidebar-link sidebar-title {{ request()->routeIs('analysis.*') ? 'active' : '' }}"
                                         href="javascript:void(0)">
@@ -144,9 +148,14 @@
                                         href="{{ route('register_users') }}">
                                         <i data-feather="user-check"></i><span class="">Register Users</span></a>
                                 </li>
-                            @endhasexactroles
-                            @hasexactroles('finance head')
+                            @endhasanyrole
+                            @hasanyrole('accountant head|accountant officer')
                                 <li class="sidebar-list">
+                                    <a class="sidebar-link sidebar-title link-nav {{ request()->routeIs('fee.receipt') ? 'active' : '' }}"
+                                        href="{{ route('fee.receipt') }}">
+                                        <i data-feather="credit-card"></i><span class="">Fee Receipt</span></a>
+                                </li>
+                                {{-- <li class="sidebar-list">
                                     <a class="sidebar-link sidebar-title {{ request()->routeIs('fee.*') ? 'active' : '' }}"
                                         href="javascript:void(0)">
                                         <i data-feather="credit-card"></i><span>Fee Management</span>
@@ -164,7 +173,7 @@
                                                 class="{{ request()->routeIs('fee.receipt') ? 'active' : '' }}"><span>Receipt</span></a>
                                         </li>
                                     </ul>
-                                </li>
+                                </li> --}}
                                 <li class="sidebar-list">
                                     <a class="sidebar-link sidebar-title {{ request()->routeIs('finalfee.*') ? 'active' : '' }}"
                                         href="javascript:void(0)">
@@ -181,11 +190,11 @@
 
                                     </ul>
                                 </li>
-                                <li class="sidebar-list">
+                                {{-- <li class="sidebar-list">
                                     <a class="sidebar-link sidebar-title link-nav {{ request()->routeIs('program_fee_setup') ? 'active' : '' }}"
                                         href="{{ route('program_fee_setup') }}">
                                         <i data-feather="settings"></i><span class="">Program Fee Setup</span></a>
-                                </li>
+                                </li> --}}
                                 <li class="sidebar-list">
                                     <a class="sidebar-link sidebar-title {{ request()->routeIs('fee_report.*') ? 'active' : '' }}"
                                         href="javascript:void(0)">
@@ -228,8 +237,8 @@
                                         <i data-feather="shuffle"></i><span class="">Change Student
                                             Program</span></a>
                                 </li>
-                            @endhasexactroles
-                            @hasanyrole('admission head|finance head')
+                            @endhasanyrole
+                            @hasanyrole('admission head|accountant head|accountant officer|admission officer')
                                 <li class="sidebar-list">
                                     <a class="sidebar-link sidebar-title {{ request()->routeIs('report.*') ? 'active' : '' }}"
                                         href="javascript:void(0)">
@@ -240,9 +249,11 @@
                                                 class="{{ request()->routeIs('report.fee_report') ? 'active' : '' }}"><span>Fee
                                                     Report</span></a></li>
                                         <li><a href="{{ route('report.application_report') }}"
-                                                class="{{ request()->routeIs('report.application_report') ? 'active' : '' }}"><span>Application Report</span></a></li>
+                                                class="{{ request()->routeIs('report.application_report') ? 'active' : '' }}"><span>Application
+                                                    Report</span></a></li>
                                         <li><a href="{{ route('report.application_fee_report') }}"
-                                                class="{{ request()->routeIs('report.application_fee_report') ? 'active' : '' }}"><span>Application Fee Report</span></a></li>
+                                                class="{{ request()->routeIs('report.application_fee_report') ? 'active' : '' }}"><span>Application
+                                                    Fee Report</span></a></li>
                                         <li><a href="#" class=""><span>Attendance Report</span></a></li>
                                     </ul>
                                 </li>
@@ -255,7 +266,8 @@
                                         <i data-feather="upload"></i><span class="">Upload Fee Challan</span></a>
                                 </li>
                                 <li class="sidebar-list">
-                                    <a class="sidebar-link sidebar-title link-nav" href="{{ route('application.offer_letter') }}">
+                                    <a class="sidebar-link sidebar-title link-nav {{ request()->routeIs('application.offer_letter') ? 'active' : '' }}"
+                                        href="{{ route('application.offer_letter') }}">
                                         <i data-feather="download"></i><span class="">Download Offer
                                             Letter</span></a>
                                 </li>

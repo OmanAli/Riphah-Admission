@@ -99,7 +99,13 @@
                                                 <td>{{ $item->total_fee }}</td>
                                                 <td>{{ $item->taxFee }}</td>
                                                 <td>{{ $item->net_fee }}</td>
-                                                <td>--</td>
+                                                <td>
+                                                    @if ($offerLetterCheck && $offerLetterCheck->program_id == $item->oas_program_id)
+                                                        <span class="text-success">Offer Letter Issued</span>
+                                                    @else
+                                                        --
+                                                    @endif
+                                                </td>
                                             </tr>
                                         @endforeach
                                     @endif
@@ -112,44 +118,57 @@
                                     <p>Action (Note: If submitted again previous challan with be overwritten)</p>
                                 </div>
                             </div>
-                            <form action="{{ route('create_fee_challan') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="oas_id" value="{{ $oasID }}">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <label>Select Program</label>
-                                        <select name="program_id" id="program_id" class="form-control" required>
-                                            <option value="" selected disabled>--Select Program--</option>
-                                            @foreach ($programs as $program)
-                                                <option value="{{ $program->id }}">{{ $program->program_name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <label>Select Bank</label>
-                                        <select name="sap_prg_id" id="sap_prg_id" class="form-control" required>
-                                            <option value="" selected disabled>--Select Bank--</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label for="">No Of Installments</label>
-                                        <select name="installments" id="" class="form-control" required>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label for="">Due Date</label>
-                                        <input type="date" class="form-control" name="due_date" required>
-                                    </div>
-                                    <div class="col-md-2" style="margin: 28px 0 0 0;">
-                                        <button class="btn btn-primary">Create Challan</button>
-                                    </div>
+                            @if (!isset($offerLetterCheck))
+                                <div class="row text-center mt-3 mb-3">
+                                    <span class="text-danger">
+                                        You cannot generate a challan for this application until the offer letter is
+                                        issued.
+                                    </span>
                                 </div>
-                            </form>
+                            @else
+                                <form action="{{ route('create_fee_challan') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="oas_id" value="{{ $oasID }}">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Select Program</label>
+                                            <select name="program_id" id="program_id" class="form-control" required>
+                                                <option value="" selected disabled>--Select Program--</option>
+                                                @foreach ($programs as $program)
+                                                    <option value="{{ $program->id }}">{{ $program->program_name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label>Select Bank</label>
+                                            <select name="sap_prg_id" id="sap_prg_id" class="form-control" required>
+                                                <option value="" selected disabled>--Select Bank--</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="">No Of Installments</label>
+                                            <select name="installments" id="" class="form-control" required>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="">Due Date</label>
+                                            <input type="date" class="form-control" name="due_date" required>
+                                        </div>
+
+                                        <div class="col-md-2" style="margin: 28px 0 0 0;">
+
+                                            <button class="btn btn-primary">Create Challan</button>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            @endif
                             <hr>
                             <h5>Created Challan Info</h5>
                             <div class="table-responsive mt-5">

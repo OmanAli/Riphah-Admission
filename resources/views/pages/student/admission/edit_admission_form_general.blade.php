@@ -50,10 +50,10 @@
                                                 <select name="campus_id" id="campus_id"
                                                     class="form-select form-control-primary" required>
                                                     <option value="" disabled>- Select Campus -</option>
-                                                    @foreach ($campus as $c)
+                                                    @foreach ($regions as $c)
                                                         <option value="{{ $c->id }}"
                                                             {{ old('campus_id', $application->campus_id) == $c->id ? 'selected' : '' }}>
-                                                            {{ $c->campus_name }}
+                                                            {{ $c->region_name }}
                                                         </option>
                                                     @endforeach
                                                 </select>

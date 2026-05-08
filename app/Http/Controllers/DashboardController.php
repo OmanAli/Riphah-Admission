@@ -65,13 +65,12 @@ class DashboardController extends Controller
         if (!$application) {
             return redirect()->route('oas.approve_submitted_application', ['oasID' => $encodedID])->with('error', 'Application not found.');
         }
-        $application->application_status = 1;
-        $application->application_program = $request->input('program');
+        $application->application_status = $request->input('status');
         $application->save();
 
 
         return redirect()->route('oas.approve_submitted_application', ['oasID' => $encodedID])
-            ->with('success', 'Application approved successfully.');
+            ->with('success', 'Application updated successfully.');
     }
 
     public function set_eligibility(Request $request, $oasID = null)

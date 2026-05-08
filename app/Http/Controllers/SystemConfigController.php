@@ -8,6 +8,7 @@ use App\Models\Campus;
 use App\Models\Department;
 use App\Models\FeeStructure;
 use App\Models\Program;
+use App\Models\Region;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -76,7 +77,8 @@ class SystemConfigController extends Controller
     {
         $this->authorize('view', Campus::class);
         $data = Campus::get();
-        return view('pages.config.campus', compact('data'));
+        $regions = Region::get();
+        return view('pages.config.campus', compact('data', 'regions'));
     }
 
     public function campus_store(Request $request)
@@ -88,6 +90,7 @@ class SystemConfigController extends Controller
         try {
             DB::beginTransaction();
             Campus::create([
+                'region_id' => $request->region_id ?? null,
                 'campus_name' => $request->campus_name,
                 'campus_head_name' => $request->campus_head_name ?? null,
                 'campus_email' => $request->campus_email ?? null,

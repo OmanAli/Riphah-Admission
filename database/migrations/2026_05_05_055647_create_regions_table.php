@@ -11,16 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-          Schema::create('education_documents', function (Blueprint $table) {
+        Schema::create('regions', function (Blueprint $table) {
             $table->id();
-            $table->string('oas_id');
-            $table->string('hssc_degree');
-            $table->string('cnic');
-            $table->string('ssc_degree');
+            $table->string('region_name');
             $table->timestamps();
-            $table->foreign('oas_id')->references('oas_id')->on('applications')->onDelete('cascade');
         });
-
     }
 
     /**
@@ -28,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('education_documents');
+        Schema::dropIfExists('regions');
     }
 };

@@ -26,7 +26,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row mb-3">
-                            <div class="col-md-12 d-flex justify-content-end">
+                            {{-- <div class="col-md-12 d-flex justify-content-end">
                                 <form action="{{ route('oas.save_eligibility') }}" class="d-flex align-items-center gap-2"
                                     method="post">
                                     @csrf
@@ -50,7 +50,7 @@
 
                                     <button type="submit" class="btn btn-primary">SUBMIT</button>
                                 </form>
-                            </div>
+                            </div> --}}
                         </div>
 
                         <div class="table-responsive">

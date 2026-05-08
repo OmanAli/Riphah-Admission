@@ -48,10 +48,10 @@
                                                     class="form-select form-control-primary" name="select" required
                                                     autofocus>
                                                     <option value="" selected disabled>- Select Campus -</option>
-                                                    @foreach ($campus as $c)
+                                                    @foreach ($regions as $c)
                                                         <option value="{{ $c->id }}"
                                                             {{ old('campus_id') == $c->id ? 'selected' : '' }}>
-                                                            {{ $c->campus_name }}</option>
+                                                            {{ $c->region_name }}</option>
                                                     @endforeach
                                                 </select>
                                                 <span class="text-danger">{{ $errors->first('campus_id') }}</span>

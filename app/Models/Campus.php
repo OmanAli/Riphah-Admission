@@ -26,4 +26,14 @@ class Campus extends Model
     {
         return $this->hasMany(AdmissionSession::class, 'campus_id');
     }
+
+    public function CampusRegion()
+    {
+        return $this->belongsTo(Region::class, 'region_id');
+    }
+
+    public function users()
+    {
+        return $this->hasMany(User::class, 'campus_id');
+    }
 }

@@ -19,12 +19,12 @@ class Application extends Model
     }
     public function education_detail()
     {
-        return $this->hasOne(EducationDetail::class, 'application_id');
+        return $this->hasOne(EducationDetail::class, 'oas_id', 'oas_id');
     }
 
     public function education_document()
     {
-        return $this->hasOne(EducationDocument::class, 'application_id');
+        return $this->hasOne(EducationDocument::class, 'oas_id', 'oas_id');
     }
 
     public function preferenceOne()
@@ -46,15 +46,29 @@ class Application extends Model
     {
         return $this->belongsTo(Program::class, 'program_preference_4');
     }
+    public function changeProgramPreference()
+    {
+        return $this->belongsTo(Program::class, 'change_program_preference_id');
+    }
 
     public function fee_admission()
     {
         return $this->hasOne(FeeAdmission::class, 'oas_id', 'oas_id');
     }
 
-     public function offerletter()
+    public function offerletter()
     {
-        return $this->hasOne(PublishedOfferLetter::class, 'application_id');
+        return $this->hasOne(PublishedOfferLetter::class, 'oas_id', 'oas_id');
+    }
+
+    public function ApplicationRegion()
+    {
+        return $this->belongsTo(Region::class, 'region_id');
+    }
+
+    public function feeReceipt()
+    {
+        return $this->hasOne(Receipt::class, 'oas_id', 'oas_id');
     }
 
     public function getStatusLabelAttribute()

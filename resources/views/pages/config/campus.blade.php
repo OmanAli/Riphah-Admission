@@ -35,6 +35,19 @@
                                     <div class="col-md-12">
                                         <div class="mb-3 row">
                                             <div class="col-md-4">
+                                                <label class="col-form-label">Region<span style="color:red">*</span></label>
+                                                <select name="region_id" id="" class="form-control" required>
+                                                    <option value="">Select Region</option>
+                                                    @foreach ($regions as $region)
+                                                        <option value="{{ $region->id }}"
+                                                            {{ old('region_id') == $region->id ? 'selected' : '' }}>
+                                                            {{ $region->region_name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="text-danger">{{ $errors->first('region_id') }}</span>
+                                            </div>
+                                            <div class="col-md-4">
                                                 <label class="col-form-label">Campus<span style="color:red">*</span></label>
                                                 <input type="text" class="form-control" value="{{ old('campus_name') }}"
                                                     name="campus_name" autofocus required>
@@ -48,14 +61,14 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="col-form-label">Campus Email</label>
-                                                <input type="email" class="form-control" value="{{ old('campus_email') }}"
-                                                    name="campus_email" autofocus>
+                                                <input type="email" class="form-control"
+                                                    value="{{ old('campus_email') }}" name="campus_email" autofocus>
                                                 <span class="text-danger">{{ $errors->first('campus_email') }}</span>
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="col-form-label">Campus Phone</label>
-                                                <input type="text" class="form-control" value="{{ old('campus_phone') }}"
-                                                    name="campus_phone" autofocus>
+                                                <input type="text" class="form-control"
+                                                    value="{{ old('campus_phone') }}" name="campus_phone" autofocus>
                                                 <span class="text-danger">{{ $errors->first('campus_phone') }}</span>
                                             </div>
                                             <div class="col-md-4">
@@ -87,6 +100,7 @@
                                 <thead>
                                     <tr>
 
+                                        <th>Region</th>
                                         <th>Campus Name</th>
                                         <th>Head</th>
                                         <th>Email</th>
@@ -100,6 +114,7 @@
                                         @foreach ($data as $key => $item)
                                             <tr>
 
+                                                <td>{{ $item->CampusRegion ? $item->CampusRegion->region_name : 'N/A' }}</td>
                                                 <td>{{ $item->campus_name }}</td>
                                                 <td>{{ $item->campus_head_name ?? 'N/A' }}</td>
                                                 <td>{{ $item->campus_email ?? 'N/A' }}</td>
@@ -126,7 +141,8 @@
                                                                         enctype="multipart/form-data"
                                                                         class="form theme-form">
                                                                         @csrf
-                                                                        <input type="hidden" name="campus_id" value="{{$item->id}}">
+                                                                        <input type="hidden" name="campus_id"
+                                                                            value="{{ $item->id }}">
                                                                         <div class="card-body">
                                                                             <div class="row">
                                                                                 <div class="col-md-12">

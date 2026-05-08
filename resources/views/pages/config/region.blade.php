@@ -1,5 +1,5 @@
 @extends('layouts.dashboard')
-@section('title', 'Department')
+@section('title', 'Region')
 @section('content')
 
     <div class="container-fluid">
@@ -14,7 +14,7 @@
                             <a href="{{ route('home') }}"> <i data-feather="home"></i></a>
                         </li>
                         <li class="breadcrumb-item">Home</li>
-                        <li class="breadcrumb-item active">Department</li>
+                        <li class="breadcrumb-item active">Region</li>
                     </ol>
                 </div>
             </div>
@@ -27,34 +27,20 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        <form method="POST" action="{{ route('configuration.departments_store') }}"
+                        <form method="POST" action="{{ route('configuration.region_store') }}"
                             enctype="multipart/form-data" class="form theme-form">
                             @csrf
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="mb-3 row">
-                                            <div class="col-md-6">
-                                                <label class="col-form-label">Campus<span style="color:red">*</span></label>
-                                                <select name="campus_id" id="" class="form-control" required>
-                                                    <option value="" selected disabled>Select
-                                                        Campus</option>
-                                                    @foreach ($campus as $campusItem)
-                                                        <option value="{{ $campusItem->id }}">
-                                                            {{ $campusItem->campus_name }}</option>
-                                                    @endforeach
-                                                </select>
-                                                <span class="text-danger">{{ $errors->first('campus_id') }}</span>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="col-form-label">Department Name<span
-                                                        style="color:red">*</span></label>
-                                                <input type="text" class="form-control"
-                                                    value="{{ old('department_name') }}" name="department_name" autofocus>
-                                                <span class="text-danger">{{ $errors->first('department_name') }}</span>
+                                            <div class="col-md-4">
+                                                <label class="col-form-label">Region<span style="color:red">*</span></label>
+                                                <input type="text" class="form-control" value="{{ old('region_name') }}"
+                                                    name="region_name" autofocus required>
+                                                <span class="text-danger">{{ $errors->first('region_name') }}</span>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -76,9 +62,7 @@
                                 <thead>
                                     <tr>
 
-                                        <th>Campus Name</th>
                                         <th>Region</th>
-                                        <th>Department</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -86,49 +70,45 @@
                                     @if (isset($data))
                                         @foreach ($data as $key => $item)
                                             <tr>
-                                                <td>{{ $item->campus->campus_name ?? '' }}</td>
-                                                <td>{{ $item->campus->CampusRegion->region_name ?? 'N/A' }}</td>
-                                                <td>{{ $item->department_name ?? '' }}</td>
+
+                                                <td>{{ $item->region_name }}</td>
                                                 <td>
                                                     <a type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                        data-bs-target="#editDepartmentModal{{ $key }}"><i
+                                                        data-bs-target="#editRegionModal{{ $key }}"><i
                                                             class="fa fa-pencil"></i></a>
-                                                    <div class="modal fade" id="editDepartmentModal{{ $key }}"
+                                                    <div class="modal fade" id="editRegionModal{{ $key }}"
                                                         tabindex="-1" aria-labelledby="feeModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog">
-
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
                                                                     <h5 class="modal-title" id="feeModalLabel">
-                                                                        EDIT DEPARTMENT</h5>
+                                                                        EDIT REGION</h5>
                                                                     <button type="button" class="btn-close"
                                                                         data-bs-dismiss="modal" aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <form method="POST"
-                                                                        action="{{ route('configuration.departments_update') }}"
+                                                                        action="{{ route('configuration.region_update') }}"
                                                                         enctype="multipart/form-data"
                                                                         class="form theme-form">
                                                                         @csrf
-                                                                        <input type="hidden" value="{{ $item->id }}"
-                                                                            name="department_id">
+                                                                        <input type="hidden" name="region_id"
+                                                                            value="{{ $item->id }}">
                                                                         <div class="card-body">
                                                                             <div class="row">
                                                                                 <div class="col-md-12">
                                                                                     <div class="mb-3 row">
-
-                                                                                        <div class="col-md-12">
+                                                                                        <div class="col-md-6">
                                                                                             <label
-                                                                                                class="col-form-label">Department
-                                                                                                Name<span
+                                                                                                class="col-form-label">Region<span
                                                                                                     style="color:red">*</span></label>
                                                                                             <input type="text"
                                                                                                 class="form-control"
-                                                                                                value="{{ $item->department_name }}"
-                                                                                                name="department_name"
-                                                                                                autofocus>
+                                                                                                value="{{ $item->region_name }}"
+                                                                                                name="region_name" autofocus
+                                                                                                required>
                                                                                             <span
-                                                                                                class="text-danger">{{ $errors->first('department_name') }}</span>
+                                                                                                class="text-danger">{{ $errors->first('region_name') }}</span>
                                                                                         </div>
                                                                                     </div>
 
@@ -143,8 +123,6 @@
                                                                             </div>
                                                                         </div>
                                                                     </form>
-
-
                                                                 </div>
 
                                                             </div>

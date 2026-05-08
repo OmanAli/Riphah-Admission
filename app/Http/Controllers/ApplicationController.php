@@ -14,6 +14,7 @@ use App\Models\MBBS_BDS;
 use App\Models\MbbsBds;
 use App\Models\Program;
 use App\Models\PublishedOfferLetter;
+use App\Models\Region;
 use App\Models\SapInvoiceDetail;
 use App\Models\SapProgram;
 use Illuminate\Http\Request;
@@ -27,17 +28,38 @@ class ApplicationController extends Controller
     {
         $campus = Campus::all();
         $sessions = AdmissionSession::where('session_status', 1)->get();
-        return view('pages.student.admission.admission_form_general', compact('campus', 'sessions'));
+        $regions = Region::get();
+        return view('pages.student.admission.admission_form_general', compact('campus', 'sessions', 'regions'));
     }
 
     public function getPrograms(Request $request)
     {
-        $programs = Program::where('campus_id', $request->campus_id)
+        $session = AdmissionSession::where('session_status', 1)->first();
+        $sessionName = null;
+        if ($session) {
+            $sessionName = $session->session_type . ' ' . $session->session_year;
+        }
+        $campusIDs = Campus::where('region_id', $request->campus_id)->pluck('id');
+        $excludedPrograms = [];
+        if ($sessionName) {
+            $applications = Application::where('user_id', auth()->id())
+                ->where('session', $sessionName)
+                ->get();
+            foreach ($applications as $application) {
+
+                $excludedPrograms[] = $application->program_preference_1;
+                $excludedPrograms[] = $application->program_preference_2;
+                $excludedPrograms[] = $application->program_preference_3;
+                $excludedPrograms[] = $application->program_preference_4;
+            }
+            $excludedPrograms = array_filter(array_unique($excludedPrograms));
+        }
+        $programs = Program::whereIn('campus_id', $campusIDs)
             ->where('program_type', $request->level)
-            // ->where('session_id', (int)$request->session)
             ->where('fee_status', 1)
             ->where('sap_status', 1)
             ->where('active', 1)
+            ->whereNotIn('id', $excludedPrograms)
             ->orderBy('program_name', 'asc')
             ->get();
         return response()->json($programs);
@@ -91,7 +113,8 @@ class ApplicationController extends Controller
             $application = Application::create([
                 'oas_id' => $oas_id,
                 'user_id' => Auth::id(),
-                'campus_id' => $request->campus_id,
+                // 'campus_id' => $request->campus_id,
+                'region_id' => $request->campus_id,
                 'session' => $session->session_type . ' ' . $session->session_year,
                 'level' => $request->level,
                 'program_preference_1' => $request->program_id,
@@ -116,12 +139,13 @@ class ApplicationController extends Controller
                 'country' => $request->country,
                 'last_institute' => $request->college,
                 'hear_aboutus' => $request->hear_aboutus,
+                'ok_for_admission' => 1,
                 // 'emergency_contact_name' => $request->emergency_full_name,
                 // 'emergency_contact_relation' => $request->emergency_relationship,
                 // 'emergency_contact_phone' => $request->emergency_phone_no,
             ]);
             // EducationDetail::create([
-            //     'application_id' => $application->id,
+            //     'oas_id' => $application->oas_id,
             //     'matric_degree' => $request->matric_degree,
             //     'matric_passing_year' => $request->matric_passing_year,
             //     'matric_total_marks' => $request->matric_total_mark,
@@ -158,7 +182,7 @@ class ApplicationController extends Controller
             // $request->file('f_cnic')->move($uploadPath, $cnicName);
 
             // EducationDocument::create([
-            //     'application_id' => $application->id,
+            //     'oas_id' => $application->oas_id,
             //     'hssc_degree' => $hsscName,
             //     'ssc_degree' => $sscName,
             //     'cnic' => $cnicName,
@@ -169,7 +193,7 @@ class ApplicationController extends Controller
             return redirect()->route('home')->with('message', 'Application Submitted Successfully!');
         } catch (\Throwable $th) {
             DB::rollBack();
-            return back()->with('error', $th->getMessage());
+            return back()->with('error', 'Something went wrong! Please try again.');
         }
     }
 
@@ -181,7 +205,8 @@ class ApplicationController extends Controller
         }
         $campus = Campus::all();
         $sessions = AdmissionSession::where('session_status', 1)->get();
-        return view('pages.student.admission.edit_admission_form_general', compact('campus', 'sessions', 'application'));
+        $regions = Region::get();
+        return view('pages.student.admission.edit_admission_form_general', compact('campus', 'sessions', 'application', 'regions'));
     }
 
     public function application_update(Request $request, $id)
@@ -213,7 +238,8 @@ class ApplicationController extends Controller
                 return back()->with('error', 'Application not found');
             }
             $application->update([
-                'campus_id' => $request->campus_id,
+                // 'campus_id' => $request->campus_id,
+                'region_id' => $request->campus_id,
                 'level' => $request->level,
                 'program_preference_1' => $request->program_id,
                 'program_preference_2' => $request->program_id_1 ?? null,
@@ -616,7 +642,7 @@ class ApplicationController extends Controller
     public function program_change(Request $request)
     {
         if ($request->isMethod('post')) {
-            $application = Application::where('oas_id', $request->oas_id)->first();
+            $application = Application::where('oas_id', $request->oas_id)->with('offerletter')->first();
             return view('pages.change_program', ['application' => $application]);
         } else {
             return view('pages.change_program');
@@ -625,9 +651,44 @@ class ApplicationController extends Controller
 
     public function program_details($oas_id)
     {
-        $application = Application::where('oas_id', $oas_id)->first();
-        return view('pages.change_program_details', compact('application'));
+        $application = Application::where('oas_id', $oas_id)->firstOrFail();
+        $regionCampusIDs = [];
+        if ($application) {
+            $regionCampusIDs = Campus::where('region_id', $application->region_id)
+                ->pluck('id')
+                ->toArray();
+        }
+        $excludedPrograms = array_filter([
+            $application->program_preference_1,
+            $application->program_preference_2,
+            $application->program_preference_3,
+            $application->program_preference_4,
+        ]);
+
+        $programs = Program::whereIn('campus_id', $regionCampusIDs)
+            ->where('program_type', $application->level)
+            ->where('fee_status', 1)
+            ->where('sap_status', 1)
+            ->where('active', 1)
+            ->whereNotIn('id', $excludedPrograms)
+            ->orderBy('program_name', 'asc')
+            ->get();
+
+        return view('pages.change_program_details', compact(
+            'application',
+            'programs'
+        ));
     }
+    public function application_program_add(Request $request)
+    {
+        $application = Application::where('oas_id', $request->oas_id)->firstOrFail();
+        $application->update([
+            'change_program_preference_id' => $request->offered_program,
+        ]);
+
+        return view('pages.change_program', ['application' => $application]);
+    }
+
 
     public function upload_challan()
     {
@@ -662,8 +723,8 @@ class ApplicationController extends Controller
 
     public function offer_letter()
     {
-        $IDs = Application::where('user_id', Auth::id())->pluck('id')->toArray();
-        $offerLetters = PublishedOfferLetter::whereIn('application_id', $IDs)->get();
+        $IDs = Application::where('user_id', Auth::id())->pluck('oas_id')->toArray();
+        $offerLetters = PublishedOfferLetter::whereIn('oas_id', $IDs)->get();
         return view('pages.student.download_offer_letter', compact('offerLetters'));
     }
 }

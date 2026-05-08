@@ -49,55 +49,66 @@
             </div>
         </div>
     </div>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row mb-3">
-                                <div class="col-md-12 d-flex justify-content-end">
-                                </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-12 d-flex justify-content-end">
                             </div>
-                            <div class="table-responsive">
-                                <table class="display" id="basic-1" style="font-size: 14px;">
-                                    <thead>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="display" id="basic-1" style="font-size: 14px;">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Father Name</th>
+                                        <th>Changed Program ID</th>
+                                        <th>Changed Program Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (isset($application))
+                                        {{-- @foreach ($applications as $key => $application) --}}
                                         <tr>
-                                            <th>ID</th>
-                                            <th>Name</th>
-                                            <th>Father Name</th>
-                                            <th>Changed Program ID</th>
-                                            <th>Changed Program Name</th>
-                                            <th>Action</th>
+
+                                            <td>{{ $application->oas_id }}</td>
+                                            <td>{{ $application->first_name . ' ' . $application->last_name }}</td>
+                                            <td>{{ $application->father_name }}</td>
+                                            <td>@if ($application->change_program_preference_id){{ $application->change_program_preference_id }}@else N/A @endif</td>
+                                            <td>@if ($application->change_program_preference_id){{ $application->changeProgramPreference->program_name ?? 'N/A' }}@else N/A @endif</td>
+                                            <td>
+                                                @if ($application->change_program_preference_id)
+                                                    <span class="badge bg-secondary">Program Changed</span>
+                                                @else
+                                                    @if ($application->offerletter && $application->offerletter->status == 0)
+                                                        <a class="btn btn-primary btn-sm"
+                                                            href="{{ route('program_details', $application->oas_id) }}">Edit</a>
+                                                    @else
+                                                        <span class="badge bg-secondary">Offer Letter Issued</span>
+                                                    @endif
+                                                @endif
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if (isset($application))
-                                            {{-- @foreach ($applications as $key => $application) --}}
-                                                <tr>
+                                        {{-- @endforeach --}}
 
-                                                    <td>{{ $application->oas_id }}</td>
-                                                    <td>{{ $application->first_name . ' ' . $application->last_name }}</td>
-                                                    <td>{{ $application->father_name }}</td>
-                                                    <td>-</td>
-                                                    <td>-</td>
-                                                    <td><a class="btn btn-primary btn-sm" href="{{ route('program_details', $application->oas_id) }}">Edit</a></td>
-                                                </tr>
-                                            {{-- @endforeach --}}
-
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
+                                    @endif
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    @endsection
+    </div>
+@endsection
 
-    @section('styles')
+@section('styles')
 
-    @endsection
-    @section('scripts')
+@endsection
+@section('scripts')
 
-    @endsection
+@endsection

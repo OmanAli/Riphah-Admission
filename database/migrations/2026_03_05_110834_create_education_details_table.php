@@ -15,7 +15,7 @@ return new class extends Migration
 
         Schema::create('education_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('application_id');
+            $table->string('oas_id');
             $table->string('matric_degree');
             $table->string('matric_passing_year');
             $table->string('matric_total_marks');
@@ -35,7 +35,7 @@ return new class extends Migration
             $table->string('bachelor_institute')->nullable();
             $table->string('bachelor_board_university')->nullable();
             $table->timestamps();
-            $table->foreign('application_id')->references('id')->on('applications')->onDelete('cascade');
+            $table->foreign('oas_id')->references('oas_id')->on('applications')->onDelete('cascade');
         });
     }
 

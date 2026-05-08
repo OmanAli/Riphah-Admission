@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Application;
 use App\Models\FeeStructure;
 use App\Models\GeneralSetting;
+use App\Models\Receipt;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
@@ -42,6 +43,7 @@ class HomeController extends Controller
                 'preferenceTwo',
                 'preferenceThree',
                 'preferenceFour',
+                'feeReceipt',
             ])
                 ->where('user_id', auth()->user()->id)
                 ->latest()

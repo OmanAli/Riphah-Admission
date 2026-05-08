@@ -67,20 +67,37 @@
                                                 <td>{{ $application->first_name . ' ' . $application->last_name }}</td>
                                                 <td>{{ $application->father_name }}</td>
                                                 <td>
-                                                    {{-- {{ $application->level == 'UG' ? 'Undergraduate' : ($application->level == 'PG' ? 'Postgraduate' : ($application->level == 'D' ? 'Diploma/Certificate' : $application->level)) }} --}}
+                                                    {{ $application->level == 'UG' ? 'Undergraduate' : ($application->level == 'PG' ? 'Postgraduate' : ($application->level == 'D' ? 'Diploma/Certificate' : $application->level)) }}
                                                 </td>
-                                                <td>{{ strtoupper($application->preferenceOne->program_name ?? $application->program) }}
+                                                <td>
+                                                    @if ($application->offerletter && $application->offerletter->program_id)
+                                                        {{ strtoupper($application->offerletter->offered_program->program_name) }}
+                                                    @else
+                                                        --
+                                                    @endif
                                                 </td>
 
-                                                <td>-</td>
+                                                <td>
+                                                    @if ($application->application_status == 0)
+                                                        <span class="badge bg-info" style="text-wrap: auto;">
+                                                            Approved
+                                                        </span>
+                                                    @elseif($application->application_status == 1)
+                                                        <span class="badge bg-success" style="text-wrap: auto;">
+                                                            Approved
+                                                        </span>
+                                                    @elseif($application->application_status == 2)
+                                                        <span class="badge bg-danger">Rejected</span>
+                                                    @endif
+                                                </td>
                                                 <td>
 
                                                     @if ($application->offerletter && $application->offerletter->status == 1)
-                                                        <a href="{{ route('download_offer_letter', ['id' => $application->id]) }}"
+                                                        <a href="{{ route('download_offer_letter', ['id' => $application->oas_id]) }}"
                                                             class="btn btn-success btn-sm"><i
                                                                 class="fa fa-download "></i></a>
                                                     @else
-                                                        @if ($application->offerletter && $application->offerletter->status == 2)
+                                                        @if ($application->offerletter && $application->offerletter->status == 0)
                                                             <span class="badge bg-secondary">Un Published</span>
                                                         @endif
                                                         @if (!$application->offerletter)
@@ -107,14 +124,26 @@
                                                                     </a>
 
                                                                 </li>
+                                                            @else
+                                                                @if ($application->offerletter && $application->offerletter->status == 1)
+                                                                    <li>
+                                                                        <a class="btn btn-danger btn-sm dropdown-item"
+                                                                            href="{{ route('un_publish_offer_letter', [$application->oas_id]) }}"
+                                                                            style="color: white">
+                                                                            UNPUBLISH OFFER LETTER
+                                                                        </a>
+                                                                    </li>
+                                                                @elseif($application->offerletter && $application->offerletter->status == 0)
+                                                                    <li>
+                                                                        <a class="btn btn-primary btn-sm dropdown-item"
+                                                                            type="button" data-bs-toggle="modal"
+                                                                            data-bs-target="#offerletterModal{{ $key }}"
+                                                                            style="color: white">
+                                                                            PUBLISH OFFER LETTER
+                                                                        </a>
+                                                                    </li>
+                                                                @endif
                                                             @endif
-                                                            <li>
-                                                                <a class="btn btn-danger btn-sm dropdown-item"
-                                                                    href="{{ route('un_publish_offer_letter', [$application->id]) }}"
-                                                                    style="color: white">
-                                                                    UNPUBLISH OFFER LETTER
-                                                                </a>
-                                                            </li>
                                                         </ul>
                                                     </div>
                                                     <div class="modal fade" id="offerletterModal{{ $key }}"
@@ -133,14 +162,60 @@
                                                                     <div class="modal-body">
 
                                                                         @csrf
-                                                                        <input type="hidden" name="application_id"
-                                                                            value="{{ $application->id }}">
+                                                                        <input type="hidden" name="oas_id"
+                                                                            value="{{ $application->oas_id }}">
                                                                         <div class="mb-3">
                                                                             <label for="">Fee Submission
                                                                                 Date <span
                                                                                     style="color: red">*</span></label>
                                                                             <input type="date" class="form-control"
                                                                                 name="date">
+                                                                        </div>
+                                                                        <div class="mb-3">
+                                                                            <label>
+                                                                                Select Program Preference <span
+                                                                                    class="text-danger">*</span>
+                                                                            </label>
+
+                                                                            <select name="program_id" class="form-control"
+                                                                                required>
+                                                                                <option value="" selected disabled>
+                                                                                    Select Program</option>
+
+                                                                                @if ($application->program_preference_1)
+                                                                                    <option
+                                                                                        value="{{ $application->program_preference_1 }}">
+                                                                                        {{ $application->preferenceOne->program_name }}
+                                                                                    </option>
+                                                                                @endif
+
+                                                                                @if ($application->program_preference_2)
+                                                                                    <option
+                                                                                        value="{{ $application->program_preference_2 }}">
+                                                                                        {{ $application->preferenceTwo->program_name }}
+                                                                                    </option>
+                                                                                @endif
+
+                                                                                @if ($application->program_preference_3)
+                                                                                    <option
+                                                                                        value="{{ $application->program_preference_3 }}">
+                                                                                        {{ $application->preferenceThree->program_name }}
+                                                                                    </option>
+                                                                                @endif
+
+                                                                                @if ($application->program_preference_4)
+                                                                                    <option
+                                                                                        value="{{ $application->program_preference_4 }}">
+                                                                                        {{ $application->preferenceFour->program_name }}
+                                                                                    </option>
+                                                                                @endif
+                                                                                @if ($application->change_program_preference_id)
+                                                                                    <option
+                                                                                        value="{{ $application->change_program_preference_id }}">
+                                                                                        {{ $application->changeProgramPreference->program_name }}
+                                                                                    </option>
+                                                                                @endif
+                                                                            </select>
                                                                         </div>
                                                                         <div class="mb-3">
                                                                             <label for="">Offer

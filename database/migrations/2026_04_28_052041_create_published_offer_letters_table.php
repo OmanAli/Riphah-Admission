@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('published_offer_letters', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('application_id');
+            $table->string('oas_id');
             $table->unsignedBigInteger('offer_letter');
             $table->integer('status')->default(1)->comment('1 for published, 0 for unpublished');
             $table->string('due_date')->nullable();
-            $table->foreign('application_id')->references('id')->on('applications')->onDelete('cascade');
+            $table->foreign('oas_id')->references('oas_id')->on('applications')->onDelete('cascade');
             $table->foreign('offer_letter')->references('id')->on('offer_letters')->onDelete('cascade');
             $table->timestamps();
         });

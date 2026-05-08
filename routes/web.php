@@ -10,7 +10,9 @@ use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\SAPProgramController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OfferLetterController;
+use App\Http\Controllers\RegionController;
 use App\Http\Controllers\SystemConfigController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -56,6 +58,10 @@ Route::prefix('configuration')->name('configuration.')->middleware('auth')->grou
     Route::get('/fee-structure', [SystemConfigController::class, 'fee_structure'])->name('fee_structure');
     Route::post('/fee-structure-store', [SystemConfigController::class, 'fee_structure_store'])->name('fee_structure_store');
     Route::get('/fee-structure-delete/{ID}', [SystemConfigController::class, 'fee_structure_delete'])->name('fee_structure_delete');
+    // Region
+    Route::get('/region', [RegionController::class, 'index'])->name('region');
+    Route::post('/region-store', [RegionController::class, 'region_store'])->name('region_store');
+    Route::post('/region-update', [RegionController::class, 'region_update'])->name('region_update');
     // campus
     Route::get('/campus', [SystemConfigController::class, 'campus'])->name('campus');
     Route::post('/campus-store', [SystemConfigController::class, 'campus_store'])->name('campus_store');
@@ -77,7 +83,12 @@ Route::prefix('configuration')->name('configuration.')->middleware('auth')->grou
     Route::post('/sessions-store', [SystemConfigController::class, 'sessions_store'])->name('sessions_store');
     Route::post('/sessions-update', [SystemConfigController::class, 'sessions_update'])->name('sessions_update');
 });
-
+// Users
+Route::middleware('auth')->group(function () {
+    Route::get('/users', [UserController::class, 'user_index'])->name('user_index');
+    Route::post('/users-store', [UserController::class, 'user_store'])->name('user_store');
+    Route::post('/sessions-update', [UserController::class, 'user_update'])->name('user_update');
+});
 Route::prefix('offer-letter')->name('offer_letter.')->middleware('auth')->group(function () {
     Route::get('/', [OfferLetterController::class, 'index'])->name('index');
     Route::get('/create', [OfferLetterController::class, 'create'])->name('create');
@@ -124,7 +135,6 @@ Route::prefix('reports')->name('report.')->middleware('auth')->group(function ()
     Route::get('/application-report', [ReportsController::class, 'application_report'])->name('application_report');
     Route::get('/application-fee-report', [ReportsController::class, 'application_fee_report'])->name('application_fee_report');
     Route::post('/master-report', [ReportsController::class, 'master_report'])->name('master_report');
-
 });
 
 
@@ -178,4 +188,5 @@ Route::prefix('oas-program')->name('oas_program.')->middleware('auth')->group(fu
 Route::middleware('auth')->group(function () {
     Route::any('/program-change', [ApplicationController::class, 'program_change'])->name('program_change');
     Route::get('/program-details/{oas_id}', [ApplicationController::class, 'program_details'])->name('program_details');
+    Route::post('/program-update', [ApplicationController::class, 'application_program_add'])->name('application_program_add');
 });

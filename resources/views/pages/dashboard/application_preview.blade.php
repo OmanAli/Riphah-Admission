@@ -59,7 +59,7 @@
                         <div class="col-md-4 d-flex align-items-center">
                             <label class="me-2 text-nowrap">Campus:</label>
                             <span
-                                class="fw-bold text-decoration-underline">{{ $application->appliedcampus->campus_name ?? $application->campus }}</span>
+                                class="fw-bold text-decoration-underline">{{ $application->ApplicationRegion->region_name ?? '' }}</span>
                         </div>
                     </div>
                 </div>
@@ -228,7 +228,7 @@
 @endsection
 
 @section('styles')
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
     <style>
         .container-fluid {
             font-size: 12px;
