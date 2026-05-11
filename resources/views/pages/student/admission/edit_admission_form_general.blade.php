@@ -52,7 +52,7 @@
                                                     <option value="" disabled>- Select Campus -</option>
                                                     @foreach ($regions as $c)
                                                         <option value="{{ $c->id }}"
-                                                            {{ old('campus_id', $application->campus_id) == $c->id ? 'selected' : '' }}>
+                                                            {{ old('campus_id', $application->region_id) == $c->id ? 'selected' : '' }}>
                                                             {{ $c->region_name }}
                                                         </option>
                                                     @endforeach
@@ -377,7 +377,7 @@
                 if (campus_id && level) {
 
                     $.ajax({
-                        url: "{{ route('application.getPrograms') }}",
+                        url: "{{ route('application.getPrograms', 1) }}",
                         type: "GET",
                         data: {
                             campus_id,

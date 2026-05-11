@@ -32,7 +32,7 @@ class ApplicationController extends Controller
         return view('pages.student.admission.admission_form_general', compact('campus', 'sessions', 'regions'));
     }
 
-    public function getPrograms(Request $request)
+    public function getPrograms(Request $request, $type = null)
     {
         $session = AdmissionSession::where('session_status', 1)->first();
         $sessionName = null;
@@ -41,18 +41,20 @@ class ApplicationController extends Controller
         }
         $campusIDs = Campus::where('region_id', $request->campus_id)->pluck('id');
         $excludedPrograms = [];
-        if ($sessionName) {
-            $applications = Application::where('user_id', auth()->id())
-                ->where('session', $sessionName)
-                ->get();
-            foreach ($applications as $application) {
+        if (!isset($type) || $type != 1) {
+            if ($sessionName) {
+                $applications = Application::where('user_id', auth()->id())
+                    ->where('session', $sessionName)
+                    ->get();
+                foreach ($applications as $application) {
 
-                $excludedPrograms[] = $application->program_preference_1;
-                $excludedPrograms[] = $application->program_preference_2;
-                $excludedPrograms[] = $application->program_preference_3;
-                $excludedPrograms[] = $application->program_preference_4;
+                    $excludedPrograms[] = $application->program_preference_1;
+                    $excludedPrograms[] = $application->program_preference_2;
+                    $excludedPrograms[] = $application->program_preference_3;
+                    $excludedPrograms[] = $application->program_preference_4;
+                }
+                $excludedPrograms = array_filter(array_unique($excludedPrograms));
             }
-            $excludedPrograms = array_filter(array_unique($excludedPrograms));
         }
         $programs = Program::whereIn('campus_id', $campusIDs)
             ->where('program_type', $request->level)
@@ -64,6 +66,7 @@ class ApplicationController extends Controller
             ->get();
         return response()->json($programs);
     }
+
 
     public function application_store(Request $request)
     {
@@ -118,9 +121,9 @@ class ApplicationController extends Controller
                 'session' => $session->session_type . ' ' . $session->session_year,
                 'level' => $request->level,
                 'program_preference_1' => $request->program_id,
-                'program_preference_2' => $request->program_id_1 ?? null,
-                'program_preference_3' => $request->program_id_2 ?? null,
-                'program_preference_4' => $request->program_id_3 ?? null,
+                'program_preference_2' => $request->program_id_2 ?? null,
+                'program_preference_3' => $request->program_id_3 ?? null,
+                'program_preference_4' => $request->program_id_4 ?? null,
                 'first_name' => $request->firstname,
                 'middle_name' => $request->middlename ?? null,
                 'last_name' => $request->lastname,
@@ -211,6 +214,7 @@ class ApplicationController extends Controller
 
     public function application_update(Request $request, $id)
     {
+
         $request->validate([
             'campus_id'    => 'required',
             'level'        => 'required',
@@ -242,9 +246,9 @@ class ApplicationController extends Controller
                 'region_id' => $request->campus_id,
                 'level' => $request->level,
                 'program_preference_1' => $request->program_id,
-                'program_preference_2' => $request->program_id_1 ?? null,
-                'program_preference_3' => $request->program_id_2 ?? null,
-                'program_preference_4' => $request->program_id_3 ?? null,
+                'program_preference_2' => $request->program_id_2 ?? null,
+                'program_preference_3' => $request->program_id_3 ?? null,
+                'program_preference_4' => $request->program_id_4 ?? null,
                 'first_name' => $request->firstname,
                 'middle_name' => $request->middlename ?? null,
                 'last_name' => $request->lastname,

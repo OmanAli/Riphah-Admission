@@ -34,7 +34,7 @@ Route::prefix('application')->name('application.')->middleware('auth')->group(fu
     Route::get('/form', [ApplicationController::class, 'form'])->name('form');
     Route::get('/form/{id}', [ApplicationController::class, 'edit_form'])->name('form_edit');
     Route::put('/form/{id}', [ApplicationController::class, 'application_update'])->name('form_update');
-    Route::get('/get-programs', [ApplicationController::class, 'getPrograms'])->name('getPrograms');
+    Route::get('/get-programs/{type?}', [ApplicationController::class, 'getPrograms'])->name('getPrograms');
     Route::post('/application-store', [ApplicationController::class, 'application_store'])->name('application_store');
 
     // German Language Course
