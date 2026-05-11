@@ -121,6 +121,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/eligibility-update/{oasID}/{value}', [AdmissionManagementController::class, 'eligibility_update'])->name('eligibility_update');
     Route::get('/approve-admission', [AdmissionManagementController::class, 'approve_admission'])->name('approve_admission');
     Route::get('/approve-application', [AdmissionManagementController::class, 'approve_application'])->name('approve_application');
+    Route::get('/get-offer-letters/{program_id}', [AdmissionManagementController::class, 'get_offer_letters'])->name('get_offer_letters');
     Route::post('/publish-offer-letter', [AdmissionManagementController::class, 'publish_offer_letter'])->name('publish_offer_letter');
     Route::get('/download-offer-letter/{id}', [AdmissionManagementController::class, 'download_offer_letter'])->name('download_offer_letter');
     Route::get('/un-publish-offer-letter/{id}', [AdmissionManagementController::class, 'un_publish_offer_letter'])->name('un_publish_offer_letter');

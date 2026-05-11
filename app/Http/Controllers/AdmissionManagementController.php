@@ -57,12 +57,23 @@ class AdmissionManagementController extends Controller
             ->filter()
             ->unique()
             ->values();
-        $letters = OfferLetter::whereIn('oas_program_id', $programIds)->latest()->get();
-        return view('pages.admission.approve_application', compact('applications', 'letters'));
+        $programs = Program::whereIn('id', $programIds)->latest()->get();
+        return view('pages.admission.approve_application', compact('applications', 'programs'));
     }
+    public function get_offer_letters($program_id)
+{
+    $letters = OfferLetter::where('oas_program_id', $program_id)->get();
 
+    return response()->json($letters);
+}
     public function publish_offer_letter(Request $request)
     {
+        $request->validate([
+            'offer_letter'    => 'required',
+            'program_id'   => 'required',
+            'date'    => 'required',
+
+        ]);
         $application = Application::where('oas_id', $request->input('oas_id'))->first();
         $offer_letter = OfferLetter::where('id', $request->input('offer_letter'))->first();
         $due_date = $request->input('date');

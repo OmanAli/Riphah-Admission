@@ -169,7 +169,7 @@
                                                                                 Date <span
                                                                                     style="color: red">*</span></label>
                                                                             <input type="date" class="form-control"
-                                                                                name="date">
+                                                                                name="date" required>
                                                                         </div>
                                                                         <div class="mb-3">
                                                                             <label>
@@ -177,43 +177,17 @@
                                                                                     class="text-danger">*</span>
                                                                             </label>
 
-                                                                            <select name="program_id" class="form-control"
+                                                                            <select name="program_id" id="program_id" class="form-control"
                                                                                 required>
                                                                                 <option value="" selected disabled>
                                                                                     Select Program</option>
-
-                                                                                @if ($application->program_preference_1)
-                                                                                    <option
-                                                                                        value="{{ $application->program_preference_1 }}">
-                                                                                        {{ $application->preferenceOne->program_name }}
-                                                                                    </option>
-                                                                                @endif
-
-                                                                                @if ($application->program_preference_2)
-                                                                                    <option
-                                                                                        value="{{ $application->program_preference_2 }}">
-                                                                                        {{ $application->preferenceTwo->program_name }}
-                                                                                    </option>
-                                                                                @endif
-
-                                                                                @if ($application->program_preference_3)
-                                                                                    <option
-                                                                                        value="{{ $application->program_preference_3 }}">
-                                                                                        {{ $application->preferenceThree->program_name }}
-                                                                                    </option>
-                                                                                @endif
-
-                                                                                @if ($application->program_preference_4)
-                                                                                    <option
-                                                                                        value="{{ $application->program_preference_4 }}">
-                                                                                        {{ $application->preferenceFour->program_name }}
-                                                                                    </option>
-                                                                                @endif
-                                                                                @if ($application->change_program_preference_id)
-                                                                                    <option
-                                                                                        value="{{ $application->change_program_preference_id }}">
-                                                                                        {{ $application->changeProgramPreference->program_name }}
-                                                                                    </option>
+                                                                                @if (isset($programs))
+                                                                                    @foreach ($programs as $prg)
+                                                                                        <option
+                                                                                            value="{{ $prg->id }}">
+                                                                                            {{ $prg->program_name }}
+                                                                                        </option>
+                                                                                    @endforeach
                                                                                 @endif
                                                                             </select>
                                                                         </div>
@@ -221,15 +195,10 @@
                                                                             <label for="">Offer
                                                                                 Letter<span
                                                                                     style="color: red">*</span></label>
-                                                                            <select name="offer_letter" id=""
-                                                                                class="form-control">
+                                                                            <select name="offer_letter" id="offer_letter"
+                                                                                class="form-control" required>
                                                                                 <option value="" selected disabled>
-                                                                                    Select Offer Letter
-                                                                                </option>
-                                                                                @foreach ($letters as $letter)
-                                                                                    <option value="{{ $letter->id }}">
-                                                                                        {{ $letter->name }}</option>
-                                                                                @endforeach
+                                                                                    Select Offer Letter</option>
                                                                             </select>
                                                                         </div>
 
@@ -269,5 +238,36 @@
 
 @endsection
 @section('scripts')
+    <script>
+        $(document).ready(function() {
 
+            $('#program_id').on('change', function() {
+
+                let program_id = $(this).val();
+
+                $('#offer_letter').html(
+                    '<option selected disabled>Loading...</option>'
+                );
+
+                $.ajax({
+                    url: "{{ route('get_offer_letters', ':id') }}".replace(':id', program_id),
+                    type: "GET",
+
+                    success: function(response) {
+
+                        let html =
+                            '<option value="" selected disabled>Select Offer Letter</option>';
+
+                        $.each(response, function(key, item) {
+                            html += `<option value="${item.id}">${item.name}</option>`;
+                        });
+
+                        $('#offer_letter').html(html);
+                    }
+                });
+
+            });
+
+        });
+    </script>
 @endsection
