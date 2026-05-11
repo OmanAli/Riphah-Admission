@@ -45,9 +45,9 @@ class ApplicationController extends Controller
             if ($sessionName) {
                 $applications = Application::where('user_id', auth()->id())
                     ->where('session', $sessionName)
+                    ->whereIn('application_status', [0,1])
                     ->get();
                 foreach ($applications as $application) {
-
                     $excludedPrograms[] = $application->program_preference_1;
                     $excludedPrograms[] = $application->program_preference_2;
                     $excludedPrograms[] = $application->program_preference_3;

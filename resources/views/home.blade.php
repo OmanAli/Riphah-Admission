@@ -99,8 +99,11 @@
                                                 <td>{{ $item->created_at->format('Y-m-d') }}</td>
                                                 <td>
                                                     @if ($item->application_type == 'General')
+                                                        @if($item->application_status==0)
+
                                                         <a href="{{ route('application.form_edit', ['id' => $item->oas_id]) }}"
                                                             class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                                                        @endif
                                                         <a href="#" class="btn btn-danger btn-sm"><i
                                                                 class="fa fa-trash"></i></a>
                                                     @else
