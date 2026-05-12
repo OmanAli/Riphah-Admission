@@ -3,17 +3,16 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class OfferletterMail extends Mailable
+class ChallanMail extends Mailable
 {
     use Queueable, SerializesModels;
-
     public $data;
-
     /**
      * Create a new message instance.
      */
@@ -28,7 +27,7 @@ class OfferletterMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Official Offer Letter – Admission Confirmation from Riphah International University',
+            subject: 'Tuition Fee Challan – Admission Payment Details from Riphah International University',
         );
     }
 
@@ -38,7 +37,7 @@ class OfferletterMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'pages.emails.offer_letter',
+            view: 'pages.emails.challan',
             with: [
                 'data' => $this->data,
             ],
@@ -47,6 +46,8 @@ class OfferletterMail extends Mailable
 
     /**
      * Get the attachments for the message.
+     *
+     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
      */
     public function attachments(): array
     {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ChallanMail;
 use App\Models\AdmissionSession;
 use App\Models\Application;
 use App\Models\Campus;
@@ -15,6 +16,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 class FeeManagementController extends Controller
 {
@@ -174,6 +176,8 @@ class FeeManagementController extends Controller
                 $oas_prg_id = SapProgram::where('id', $sap_prg_id)->pluck('oas_prg_id')->first();
                 $due_date = $challanInfo->expiry_date;
                 $installments = $challanInfo->installments;
+            }else{
+                abort(404);
             }
         }
         $application = Application::where('oas_id', $oasID)->first();
@@ -216,6 +220,7 @@ class FeeManagementController extends Controller
             'valid_date' => $valid_date,
             'fee' => $fee,
         ];
+        Mail::to($application->email)->send(new ChallanMail($data));
         $pdf = Pdf::loadView('pages.downloads.challan_instalment_pdf', $data)
             ->setPaper('a4', 'landscape');
 
