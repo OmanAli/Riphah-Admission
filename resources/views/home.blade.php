@@ -104,8 +104,8 @@
                                                         <a href="{{ route('application.form_edit', ['id' => $item->oas_id]) }}"
                                                             class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
                                                         @endif
-                                                        <a href="#" class="btn btn-danger btn-sm"><i
-                                                                class="fa fa-trash"></i></a>
+                                                        <a href="{{ route('oas.preview_submitted_application', ['oasID' => base64_encode($item->oas_id)]) }}" class="btn btn-info btn-sm"><i
+                                                                class="fa fa-eye"></i></a>
                                                     @else
                                                         <a href="#" class="btn btn-primary btn-sm"><i
                                                                 class="fa fa-pencil"></i></a>
