@@ -186,7 +186,7 @@
                 </tr>
                 <tr class="no-border">
                     <td>Reg No:</td>
-                    <td style="text-decoration:underline;">1042</td>
+                    <td style="text-decoration:underline;">{{$application->oas_id}}</td>
                     <td>Session</td>
                     <td style="text-decoration:underline;">{{$application->session}}</td>
                 </tr>

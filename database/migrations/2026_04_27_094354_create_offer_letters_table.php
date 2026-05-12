@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('offer_letters', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('oas_program_id');
+            $table->unsignedBigInteger('oas_program_id')->nullable();
             $table->string('name');
             $table->text('instructions')->nullable();
             $table->foreign('oas_program_id')->references('id')->on('programs')->onDelete('cascade');

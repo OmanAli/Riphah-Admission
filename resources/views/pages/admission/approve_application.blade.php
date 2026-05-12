@@ -177,10 +177,11 @@
                                                                                     class="text-danger">*</span>
                                                                             </label>
 
-                                                                            <select name="program_id" id="program_id" class="form-control"
-                                                                                required>
+                                                                            <select name="program_id" id="program_id"
+                                                                                class="form-control" required>
                                                                                 <option value="" selected disabled>
                                                                                     Select Program</option>
+
                                                                                 @if (isset($programs))
                                                                                     @foreach ($programs as $prg)
                                                                                         <option
@@ -238,7 +239,7 @@
 
 @endsection
 @section('scripts')
-    <script>
+    {{-- <script>
         $(document).ready(function() {
 
             $('#program_id').on('change', function() {
@@ -263,6 +264,54 @@
                         });
 
                         $('#offer_letter').html(html);
+                    }
+                });
+
+            });
+
+        });
+    </script> --}}
+
+    <!-- Include Select2 CSS & JS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+
+            // Program dropdown searchable
+            $('#program_id').select2({
+                placeholder: "Select Program",
+                width: '100%',
+                dropdownParent: $('#program_id').parent()
+            });
+
+            // Offer letter dropdown searchable
+            $('#offer_letter').select2({
+                placeholder: "Select Offer Letter",
+                width: '100%',
+                dropdownParent: $('#offer_letter').parent()
+            });
+
+            $('#program_id').on('change', function() {
+
+                let program_id = $(this).val();
+
+                $('#offer_letter').html('<option selected disabled>Loading...</option>').trigger('change');
+
+                $.ajax({
+                    url: "{{ route('get_offer_letters', ':id') }}".replace(':id', program_id),
+                    type: "GET",
+
+                    success: function(response) {
+
+                        let html =
+                            '<option value="" selected disabled>Select Offer Letter</option>';
+
+                        $.each(response, function(key, item) {
+                            html += `<option value="${item.id}">${item.name}</option>`;
+                        });
+
+                        $('#offer_letter').html(html).trigger('change');
                     }
                 });
 

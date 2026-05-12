@@ -26,7 +26,7 @@ class OfferLetterController extends Controller
         $request->validate([
             'name'    => 'required',
             'instructions'      => 'required',
-            'oas_program_id'   => 'required|exists:programs,id',
+            // 'oas_program_id'   => 'required|exists:programs,id',
         ]);
         try {
             DB::beginTransaction();
@@ -34,7 +34,7 @@ class OfferLetterController extends Controller
             OfferLetter::create([
                 'name' => $request->name,
                 'instructions' => $request->instructions,
-                'oas_program_id' => $request->oas_program_id,
+                'oas_program_id' => $request->oas_program_id ?? null,
             ]);
             DB::commit();
 

@@ -39,7 +39,7 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="mb-3 row">
-                                            <div class="col-md-6">
+                                            {{-- <div class="col-md-6">
                                                 <label class="col-form-label">For Program<span
                                                         style="color:red">*</span></label>
                                                 <select class="form-control" name="oas_program_id" required>
@@ -48,7 +48,7 @@
                                                         <option value="{{ $program->id }}">{{ $program->program_name }}</option>
                                                     @endforeach
                                                 </select>
-                                            </div>
+                                            </div> --}}
                                             <div class="col-md-6">
                                                 <label class="col-form-label">Name<span style="color:red">*</span></label>
                                                 <input type="text" class="form-control" name="name" required>

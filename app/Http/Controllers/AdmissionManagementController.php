@@ -61,11 +61,11 @@ class AdmissionManagementController extends Controller
         return view('pages.admission.approve_application', compact('applications', 'programs'));
     }
     public function get_offer_letters($program_id)
-{
-    $letters = OfferLetter::where('oas_program_id', $program_id)->get();
-
-    return response()->json($letters);
-}
+        {
+            // $letters = OfferLetter::where('oas_program_id', $program_id)->get();
+            $letters = OfferLetter::get();
+            return response()->json($letters);
+        }
     public function publish_offer_letter(Request $request)
     {
         $request->validate([
@@ -98,15 +98,15 @@ class AdmissionManagementController extends Controller
                     'due_date'       => $due_date,
                 ]);
             }
-            // $program=Program::find($request->input('program_id'));
-            // $data = [
-            //     'session'     => $session,
-            //     'application' => $application,
-            //     'date' => \Carbon\Carbon::now()->format('M d, Y'),
-            //     'program'=> $program,
-            //     'due_date'       => $due_date,
-            // ];
-            // Mail::to($application->email)->send(new OfferletterMail($data));
+            $program=Program::find($request->input('program_id'));
+            $data = [
+                'session'     => $session,
+                'application' => $application,
+                'date' => \Carbon\Carbon::now()->format('M d, Y'),
+                'program'=> $program,
+                'due_date'       => $due_date,
+            ];
+            Mail::to($application->email)->send(new OfferletterMail($data));
             return redirect()->back()->with('message', 'Offer Letter Published Successfully!');
         }
     }

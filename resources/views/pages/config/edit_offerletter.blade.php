@@ -40,11 +40,11 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="mb-3 row">
-                                            <div class="col-md-6">
+                                            {{-- <div class="col-md-6">
                                                 <label class="col-form-label">Program:</label>
                                                 <input type="text" class="form-control" name="name"
                                                     value="{{ $data->oas_prg->program_name }}" readonly>
-                                            </div>
+                                            </div> --}}
                                             <div class="col-md-6">
                                                 <label class="col-form-label">Name<span style="color:red">*</span></label>
                                                 <input type="text" class="form-control" name="name"

@@ -269,10 +269,12 @@ class SystemConfigController extends Controller
         ]);
         try {
             DB::beginTransaction();
+            $isFirstEntry = AdmissionSession::count() == 0;
+
             AdmissionSession::create([
-                'session_year' => $request->session_year,
-                'session_type' => $request->session_type,
-                'session_status' => 0,
+                'session_year'   => $request->session_year,
+                'session_type'   => $request->session_type,
+                'session_status' => $isFirstEntry ? 1 : 0,
             ]);
             DB::commit();
             return back()->with('message', 'Data Inserted!');

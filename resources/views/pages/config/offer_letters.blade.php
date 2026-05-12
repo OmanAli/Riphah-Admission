@@ -63,13 +63,13 @@
                                                                     <div class="card">
                                                                         <div class="card-body">
                                                                             <div class="row">
-                                                                                <div class="col-md-3"><label
+                                                                                {{-- <div class="col-md-3"><label
                                                                                         for="">Program:</label>
                                                                                 </div>
                                                                                 <div class="col-md-9">
                                                                                     <h5>{{ $item->oas_prg->program_name ?? '' }}
                                                                                     </h5>
-                                                                                </div>
+                                                                                </div> --}}
                                                                                 <div class="col-md-3"><label
                                                                                         for="">Name:</label></div>
                                                                                 <div class="col-md-9">
