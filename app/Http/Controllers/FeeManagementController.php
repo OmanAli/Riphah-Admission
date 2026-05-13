@@ -186,9 +186,16 @@ class FeeManagementController extends Controller
         $conID  = '7319020' . $oasID . '0';
         $drawnSession = AdmissionSession::where('session_status', 1)->first();
         $fee = FinalFee::where('oas_program_id',  $oas_prg_id)->firstOrFail();
-        $netFee = (float) $fee->net_fee;
+        // $netFee = (float) $fee->net_fee;
+        // One Time Charges
+        $oneTime = $fee->admissionFee + $fee->registrationFee + $fee->idCardFee;
+        // Semester Dues
+        $tuition = $fee->credit_hour * $fee->per_credit_hour;
+        $semester = $tuition + $fee->examinationFee + $fee->semesterEnrollFee;
+        // Grand Total
+        $total = $oneTime + $semester;
+        $netFee = (float) $total;
         $firstInstallment = round($netFee / $installments, 2);
-
         $remainingAmount = $netFee - $firstInstallment;
 
         $valid_date = $due_date;
