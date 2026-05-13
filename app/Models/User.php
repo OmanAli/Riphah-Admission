@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use App\Notifications\ResetPasswordNotification;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles;
+      use HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -65,7 +66,7 @@ class User extends Authenticatable
         return $this->hasMany(MbbsBds::class, 'user_id');
     }
 
-      public function user_campus()
+    public function user_campus()
     {
         return $this->belongsTo(Campus::class, 'campus_id');
     }

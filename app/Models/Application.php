@@ -71,6 +71,10 @@ class Application extends Model
         return $this->hasOne(Receipt::class, 'oas_id', 'oas_id');
     }
 
+     public function appliedRegion()
+    {
+        return $this->belongsTo(Region::class, 'region_id');
+    }
     public function getStatusLabelAttribute()
     {
         return match ($this->application_status) {

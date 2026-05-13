@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('profit_center')->nullable();
             $table->string('fee_category')->nullable();
             $table->string('oas_prg_name')->nullable();
-            $table->string('oas_prg_id')->unique();
+            $table->string('oas_prg_id')->nullable();
             $table->string('bank_name')->nullable();
             $table->string('bank_address')->nullable();
             $table->string('bank_branch_code')->default('0000');

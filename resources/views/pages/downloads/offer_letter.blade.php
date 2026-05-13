@@ -79,8 +79,7 @@
 
         <div class="mb-4">
             <p class="text-sm"><strong>Subject: <span class="underline">Provisional Admission In
-                        {{ $offer_letter->name }} (after {{ $application->level_years }} years of
-                        education) First Semester Session
+                        {{ $program->program_name }} First Semester Session
                         {{ $session->session_type }}-{{ $session->session_year }}</span></strong></p>
         </div>
 
@@ -103,27 +102,27 @@
                 <td rowspan="3" class="font-bold">One Time Charges</td>
                 <td>Admission Fee</td>
                 <td class="amount-col">
-                    {{ number_format($offer_letter->oas_prg->final_program_fee->admissionFee, 0, '.', ',') }}</td>
+                    {{ number_format($program->final_program_fee->admissionFee, 0, '.', ',') }}</td>
             </tr>
             <tr>
                 <td>University Registration Fee</td>
                 <td class="amount-col">
-                    {{ number_format($offer_letter->oas_prg->final_program_fee->registrationFee, 0, '.', ',') }}</td>
+                    {{ number_format($program->final_program_fee->registrationFee, 0, '.', ',') }}</td>
             </tr>
             <tr>
                 <td>University ID Card</td>
                 <td class="amount-col">
-                    {{ number_format($offer_letter->oas_prg->final_program_fee->idCardFee, 0, '.', ',') }}</td>
+                    {{ number_format($program->final_program_fee->idCardFee, 0, '.', ',') }}</td>
             </tr>
             <!-- Semester Dues Section -->
             <tr>
                 <td rowspan="3" class="font-bold">Semester Dues</td>
-                <td>Tuition Fee (for {{ $offer_letter->oas_prg->final_program_fee->credit_hour }} credit hours @
-                    {{ number_format($offer_letter->oas_prg->final_program_fee->per_credit_hour, 0, '.', ',') }} per
+                <td>Tuition Fee (for {{ $program->final_program_fee->credit_hour }} credit hours @
+                    {{ number_format($program->final_program_fee->per_credit_hour, 0, '.', ',') }} per
                     Cr. Hr.)</td>
                 <td class="amount-col">
                     {{ number_format(
-                        $offer_letter->oas_prg->final_program_fee->credit_hour * $offer_letter->oas_prg->final_program_fee->per_credit_hour,
+                        $program->final_program_fee->credit_hour * $program->final_program_fee->per_credit_hour,
                         0,
                         '.',
                         ',',
@@ -133,15 +132,15 @@
             <tr>
                 <td>Examination Fee</td>
                 <td class="amount-col">
-                    {{ number_format($offer_letter->oas_prg->final_program_fee->examinationFee, 0, '.', ',') }}</td>
+                    {{ number_format($program->final_program_fee->examinationFee, 0, '.', ',') }}</td>
             </tr>
             <tr>
                 <td>Semester Enrollment Fee</td>
                 <td class="amount-col">
-                    {{ number_format($offer_letter->oas_prg->final_program_fee->semesterEnrollFee, 0, '.', ',') }}</td>
+                    {{ number_format($program->final_program_fee->semesterEnrollFee, 0, '.', ',') }}</td>
             </tr>
             @php
-                $fee = $offer_letter->oas_prg->final_program_fee;
+                $fee = $program->final_program_fee;
                 // One Time Charges
                 $oneTime = $fee->admissionFee + $fee->registrationFee + $fee->idCardFee;
                 // Semester Dues
@@ -166,7 +165,8 @@
         <div class="text-xs mt-1 mb-4">
             <p>**Above fee may vary subject to change in credit hours/courses.</p>
             <p>***Last date for payment of dues and documents verification is
-                <strong>{{ \Carbon\Carbon::parse($due_date)->format('F jS, Y') }}</strong></p>
+                <strong>{{ \Carbon\Carbon::parse($due_date)->format('F jS, Y') }}</strong>
+            </p>
         </div>
 
         <div class="text-sm space-y-3">
@@ -182,7 +182,8 @@
                     accordingly. Submit the attested copies of certificates of past qualifications and provide these
                     certificates in their original form for verification before the commencement of classes. You will be
                     issued updated admission offer letter along with fee details by July 2026 therefore please visit the
-                    concerned admission office for its collection.</li>
+                    concerned admission office for its collection.
+                </li>
                 <li>Fee can be deposited to an authorized bank account on a specified fee voucher. Specified fee
                     vouchers can be acquired from the Fee and Dues office of your concerned Riphah campus. Cash and
                     cheques are not acceptable.</li><br>

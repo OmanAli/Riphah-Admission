@@ -48,7 +48,7 @@
                                         @foreach ($applications as $key => $application)
                                             <tr>
                                                 <td>{{ $application->oas_id }}</td>
-                                                <td>{{ $application->appliedcampus->campus_name }}</td>
+                                                <td>{{ $application->appliedRegion->region_name }}</td>
                                                 <td>{{ $application->preferenceOne->program_name }}</td>
                                                 <td>{{ $application->program_preference_1 }}</td>
                                                 <td>{{ $application->preferenceTwo->program_name ?? '' }}</td>

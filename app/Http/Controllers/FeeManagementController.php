@@ -176,7 +176,7 @@ class FeeManagementController extends Controller
                 $oas_prg_id = SapProgram::where('id', $sap_prg_id)->pluck('oas_prg_id')->first();
                 $due_date = $challanInfo->expiry_date;
                 $installments = $challanInfo->installments;
-            }else{
+            } else {
                 abort(404);
             }
         }
@@ -220,7 +220,9 @@ class FeeManagementController extends Controller
             'valid_date' => $valid_date,
             'fee' => $fee,
         ];
-        Mail::to($application->email)->send(new ChallanMail($data));
+        if ($request->isMethod('post')) {
+            Mail::to($application->email)->send(new ChallanMail($data));
+        }
         $pdf = Pdf::loadView('pages.downloads.challan_instalment_pdf', $data)
             ->setPaper('a4', 'landscape');
 

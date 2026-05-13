@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Provisional Admission Letter - Riphah International University</title>
+    <link rel="icon" href="{{ asset('assets/images/favicon/favicon.jpg') }}" type="image/x-icon" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @media print {
@@ -78,8 +79,7 @@
         </div>
 
         <div class="mb-4">
-            <p class="text-sm"><strong>Subject: <span class="underline">Provisional Admission In {{ $offer_letter->name }} (after {{ $application->level_years }} years of
-                        education) First Semester Session {{ $session->session_type }}-{{ $session->session_year }}</span></strong></p>
+            <p class="text-sm"><strong>Subject: <span class="underline">Provisional Admission In {{ $program->program_name }} First Semester Session {{ $session->session_type }}-{{ $session->session_year }}</span></strong></p>
         </div>
 
         <div class="mb-4 text-sm">
@@ -100,22 +100,22 @@
             <tr>
                 <td rowspan="3" class="font-bold">One Time Charges</td>
                 <td>Admission Fee</td>
-                <td class="amount-col">{{ number_format($offer_letter->oas_prg->final_program_fee->admissionFee, 0, '.', ',') }}</td>
+                <td class="amount-col">{{ number_format($program->final_program_fee->admissionFee, 0, '.', ',') }}</td>
             </tr>
             <tr>
                 <td>University Registration Fee</td>
-                <td class="amount-col">{{ number_format($offer_letter->oas_prg->final_program_fee->registrationFee, 0, '.', ',') }}</td>
+                <td class="amount-col">{{ number_format($program->final_program_fee->registrationFee, 0, '.', ',') }}</td>
             </tr>
             <tr>
                 <td>University ID Card</td>
-                <td class="amount-col">{{ number_format($offer_letter->oas_prg->final_program_fee->idCardFee, 0, '.', ',') }}</td>
+                <td class="amount-col">{{ number_format($program->final_program_fee->idCardFee, 0, '.', ',') }}</td>
             </tr>
             <!-- Semester Dues Section -->
             <tr>
                 <td rowspan="3" class="font-bold">Semester Dues</td>
-                <td>Tuition Fee (for {{ $offer_letter->oas_prg->final_program_fee->credit_hour }} credit hours @ {{ number_format($offer_letter->oas_prg->final_program_fee->per_credit_hour, 0, '.', ',') }} per Cr. Hr.)</td>
+                <td>Tuition Fee (for {{ $program->final_program_fee->credit_hour }} credit hours @ {{ number_format($program->final_program_fee->per_credit_hour, 0, '.', ',') }} per Cr. Hr.)</td>
                 <td class="amount-col">{{ number_format(
-                        $offer_letter->oas_prg->final_program_fee->credit_hour * $offer_letter->oas_prg->final_program_fee->per_credit_hour,
+                        $program->final_program_fee->credit_hour * $program->final_program_fee->per_credit_hour,
                         0,
                         '.',
                         ',',
@@ -123,14 +123,14 @@
             </tr>
             <tr>
                 <td>Examination Fee</td>
-                <td class="amount-col">{{ number_format($offer_letter->oas_prg->final_program_fee->examinationFee, 0, '.', ',') }}</td>
+                <td class="amount-col">{{ number_format($program->final_program_fee->examinationFee, 0, '.', ',') }}</td>
             </tr>
             <tr>
                 <td>Semester Enrollment Fee</td>
-                <td class="amount-col">{{ number_format($offer_letter->oas_prg->final_program_fee->semesterEnrollFee, 0, '.', ',') }}</td>
+                <td class="amount-col">{{ number_format($program->final_program_fee->semesterEnrollFee, 0, '.', ',') }}</td>
             </tr>
              @php
-                $fee = $offer_letter->oas_prg->final_program_fee;
+                $fee = $program->final_program_fee;
                 // One Time Charges
                 $oneTime =
                     $fee->admissionFee +

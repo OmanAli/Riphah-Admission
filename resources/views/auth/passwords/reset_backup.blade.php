@@ -1,13 +1,74 @@
+{{-- @extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('Reset Password') }}</div>
+
+                <div class="card-body">
+                    <form method="POST" action="{{ route('password.update') }}">
+                        @csrf
+
+                        <input type="hidden" name="token" value="{{ $token }}">
+
+                        <div class="row mb-3">
+                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
+
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                            </div>
+                        </div>
+
+                        <div class="row mb-0">
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('Reset Password') }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection --}}
 <!DOCTYPE html>
-
-
 <html lang="en">
-
 
 <head>
     <meta charset="utf-8" />
-    <title> Forgot Password
-    </title>
+    <title>Admissions Portal | Riphah International University</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content="" name="description" />
@@ -31,34 +92,33 @@
     <link
         href="https://admission.riphah.edu.pk/riphah_demo/public/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css"
         rel="stylesheet" type="text/css" />
-    <!-- END GLOBAL MANDATORY STYLES -->
-    <!-- BEGIN PAGE LEVEL PLUGINS -->
+
     <link href="https://admission.riphah.edu.pk/riphah_demo/public/assets/global/plugins/select2/css/select2.min.css"
         rel="stylesheet" type="text/css" />
     <link
         href="https://admission.riphah.edu.pk/riphah_demo/public/assets/global/plugins/select2/css/select2-bootstrap.min.css"
         rel="stylesheet" type="text/css" />
-    <!-- END PAGE LEVEL PLUGINS -->
-    <!-- BEGIN THEME GLOBAL STYLES -->
+
     <link href="https://admission.riphah.edu.pk/riphah_demo/public/assets/global/css/components.min.css"
         rel="stylesheet" id="style_components" type="text/css" />
     <link href="https://admission.riphah.edu.pk/riphah_demo/public/assets/global/css/plugins.min.css" rel="stylesheet"
         type="text/css" />
-    <!-- END THEME GLOBAL STYLES -->
-    <!-- BEGIN PAGE LEVEL STYLES -->
+
     <link href="https://admission.riphah.edu.pk/riphah_demo/public/assets/pages/css/login.min.css" rel="stylesheet"
         type="text/css" />
-    <!-- END PAGE LEVEL STYLES -->
-    <!-- BEGIN THEME LAYOUT STYLES -->
-    <!-- END THEME LAYOUT STYLES -->
+
     <link rel="shortcut icon" href="favicon.ico" />
+
 
 </head>
 <!-- END HEAD -->
 
 <body class=" login" style="background-color:#fff;">
 
-
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NLN4KQJ8" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <!-- BEGIN LOGO -->
     <div class="logo" style="margin-top:1px;">
         <a href="">
@@ -87,26 +147,17 @@
 
             </div>
         @endif
-
         <form method="POST" action="{{ route('password.update') }}">
             @csrf
 
             <input type="hidden" name="token" value="{{ $token }}">
-            <h3>New Password ?</h3>
-            <p> Enter your New password. </p>
-            <div class="row">
-                <div class="col-md-12">
-                </div>
-            </div>
-            <div class="form-group">
 
-                <div class="input-icon">
+            {{-- <div class="row mb-3">
+                <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
-                    <i class="fa fa-lock"></i>
-
+                <div class="col-md-6">
                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                        name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus
-                        placeholder="Email">
+                        name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
 
                     @error('email')
                         <span class="invalid-feedback" role="alert">
@@ -114,13 +165,14 @@
                         </span>
                     @enderror
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="input-icon">
-                    <i class="fa fa-lock"></i>
+            </div> --}}
 
+            <div class="row mb-3" style="    margin-bottom: 11px;">
+                <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+
+                <div class="col-md-6">
                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
-                        name="password" required autocomplete="new-password" placeholder="Password">
+                        name="password" required autocomplete="new-password">
 
                     @error('password')
                         <span class="invalid-feedback" role="alert">
@@ -129,25 +181,29 @@
                     @enderror
                 </div>
             </div>
-            <div class="form-group">
-                <div class="input-icon">
-                    <i class="fa fa-lock"></i>
-                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
-                        required autocomplete="new-password" placeholder="Confirm Password">
+
+            <div class="row mb-3">
+                <label for="password-confirm"
+                    class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
+
+                <div class="col-md-6">
+                     <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
+                        required autocomplete="new-password">
                 </div>
             </div>
 
-            <div class="form-actions">
-                <a href="https://admission.riphah.edu.pk/riphah_demo/public" id="back-btn"
-                    class="btn red btn-outline">Back </a>
-                <button type="submit" class="btn green pull-right"> Recover Now </button>
+            <div class="row mb-0" style="float: right">
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary">
+                        {{ __('Reset Password') }}
+                    </button>
+                </div>
             </div>
         </form>
-        <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+
+        <!-- END LOGIN FORM -->
 
     </div>
-
-    <!-- BEGIN CORE PLUGINS -->
     <script src="https://admission.riphah.edu.pk/riphah_demo/public/assets/global/plugins/jquery.min.js"
         type="text/javascript"></script>
     <script src="https://admission.riphah.edu.pk/riphah_demo/public/assets/global/plugins/bootstrap/js/bootstrap.min.js"
@@ -256,33 +312,7 @@
         }
     </script>
 
-    <!--<script>
-        -- >
-        <
-        !-- function onSignIn(t) {
-            -- >
-            <
-            !--
-            var e = t.getBasicProfile();
-            -- >
-            <
-            !--console.log("ID: " + e.getId()), console.log("Given Name: " + e.getGivenName()), console.log(
-                    "Family Name: " + e.getFamilyName()), console.log("Email: " + e.getEmail()), window.location =
-                "sign-in/google/redirect?email=" + e.getEmail() + "&f_name=" + e.getGivenName() + "&l_name=" + e
-                .getFamilyName(), t.disconnect();
-            -- >
-            <
-            !--
-            var n = t.getAuthResponse().id_token;
-            -- >
-            <
-            !--console.log("ID Token: " + n) -- >
-                <
-                !--
-        }-- >
-        <
-        !--
-    </script>-->
+
 
 
     <script type='text/javascript'>

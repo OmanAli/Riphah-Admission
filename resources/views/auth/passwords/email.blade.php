@@ -64,7 +64,7 @@
     <!-- END LOGO -->
     <!-- BEGIN LOGIN -->
     <div class="content" style="margin-top:-25px;">
-    @if ($errors->any())
+        @if ($errors->any())
             <div class="alert alert-danger alert-dismissible"
                 style="background-color: #f8d7da; border-color:#f5c6cb; color:#721c24; margin-bottom: 17px;width: 101%;">
 
@@ -74,7 +74,14 @@
 
             </div>
         @endif
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible"
+                style="background-color:#d4edda; border-color:#c3e6cb; color:#155724; margin-bottom:17px; width:101%;">
 
+                {{ session('success') }}
+
+            </div>
+        @endif
         <form method="POST" action="{{ route('password.email') }}">
             @csrf
             <h3>Forget Password ?</h3>
@@ -96,8 +103,7 @@
                 </div>
             </div>
             <div class="form-actions">
-                <a href="{{route('login')}}" id="back-btn"
-                    class="btn red btn-outline">Back </a>
+                <a href="{{ route('login') }}" id="back-btn" class="btn red btn-outline">Back </a>
                 <button type="submit" class="btn green pull-right"> Submit </button>
             </div>
         </form>

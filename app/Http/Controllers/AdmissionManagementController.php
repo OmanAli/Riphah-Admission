@@ -76,10 +76,11 @@ class AdmissionManagementController extends Controller
         ]);
         $application = Application::where('oas_id', $request->input('oas_id'))->first();
         $offer_letter = OfferLetter::where('id', $request->input('offer_letter'))->first();
+        $program=Program::where('id', $request->input('program_id'))->first();
         $due_date = $request->input('date');
         $session = AdmissionSession::where('session_status', 1)->first();
         if ($request->input('action') == 'preview') {
-            return view('pages.admission.preview_offer_letter', compact('application', 'offer_letter', 'due_date', 'session'));
+            return view('pages.admission.preview_offer_letter', compact('application', 'offer_letter', 'due_date', 'session','program'));
         } else {
             $publishedLetter = PublishedOfferLetter::where('oas_id', $request->input('oas_id'))->first();
             if ($publishedLetter) {
@@ -98,7 +99,6 @@ class AdmissionManagementController extends Controller
                     'due_date'       => $due_date,
                 ]);
             }
-            $program=Program::find($request->input('program_id'));
             $data = [
                 'session'     => $session,
                 'application' => $application,
@@ -129,7 +129,8 @@ class AdmissionManagementController extends Controller
         $offer_letter = OfferLetter::where('id', $publishedOfferLetter->offer_letter)->first();
         $due_date = $publishedOfferLetter->due_date;
         $session = AdmissionSession::where('session_status', 1)->first();
-        $pdf = PDF::loadView('pages.downloads.offer_letter', compact('application', 'offer_letter', 'due_date', 'session'))
+        $program=Program::where('id', $publishedOfferLetter->program_id)->first();
+        $pdf = PDF::loadView('pages.downloads.offer_letter', compact('application', 'offer_letter', 'due_date', 'session','program'))
             ->setPaper('a4', 'portrait');
 
         return $pdf->download($application->first_name . '_' . $application->last_name . '.pdf');

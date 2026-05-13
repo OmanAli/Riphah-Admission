@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('oas_program_id')->nullable();
             $table->string('name');
-            $table->text('instructions')->nullable();
+            $table->longText('instructions')->nullable();
             $table->foreign('oas_program_id')->references('id')->on('programs')->onDelete('cascade');
             $table->timestamps();
         });

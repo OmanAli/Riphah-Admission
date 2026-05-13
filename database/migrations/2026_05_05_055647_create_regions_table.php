@@ -14,6 +14,11 @@ return new class extends Migration
         Schema::create('regions', function (Blueprint $table) {
             $table->id();
             $table->string('region_name');
+            $table->string('hname')->nullable();
+            $table->string('email')->nullable();
+            $table->string('aemail')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
             $table->timestamps();
         });
     }
