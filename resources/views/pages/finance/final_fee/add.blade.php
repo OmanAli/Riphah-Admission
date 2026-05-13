@@ -42,17 +42,21 @@
                                 <!-- Final Fee Name -->
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="final_fee_name" class="form-label">Final Fee Name <span
-                                                style="color: red">*</span></label>
+                                        <label for="final_fee_name" class="form-label">
+                                            Final Fee Name <span style="color: red">*</span>
+                                        </label>
+
                                         <select name="oas_program_id" id="oas_program_id" class="form-control">
                                             <option value="" selected disabled>--Final Fee Name--</option>
                                             @foreach ($programs as $program)
-                                                <option value="{{ $program->id }}">{{ $program->program_name }}</option>
+                                                <option value="{{ $program->id }}">
+                                                    {{ $program->program_name }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-                                  <!-- Processing Fee -->
+                                <!-- Processing Fee -->
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="processing_fee" class="form-label">Processing Fee (₨) <span
@@ -196,5 +200,15 @@
 
 @endsection
 @section('scripts')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+    <script>
+        $(document).ready(function() {
+            $('#oas_program_id').select2({
+                placeholder: "--Final Fee Name--",
+                allowClear: true
+            });
+        });
+    </script>
 @endsection
