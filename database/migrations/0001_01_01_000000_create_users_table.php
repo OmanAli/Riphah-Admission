@@ -16,6 +16,11 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('mobile')->nullable();
+            $table->string('fatherName')->nullable();
+            $table->string('passportNo')->nullable();
+            $table->string('cnicNo')->nullable();
+            $table->string('code')->nullable();
+            $table->string('status')->nullable();
             $table->tinyInteger('role')->default(4);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

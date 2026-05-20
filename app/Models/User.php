@@ -12,7 +12,7 @@ use App\Notifications\ResetPasswordNotification;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-      use HasFactory, Notifiable, HasRoles;
+    use HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -26,6 +26,11 @@ class User extends Authenticatable
         'mobile',
         'role',
         'campus_id',
+        'fatherName',
+        'passportNo',
+        'cnicNo',
+        'code',
+        'status',
     ];
 
     /**
